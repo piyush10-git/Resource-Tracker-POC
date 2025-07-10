@@ -197,36 +197,37 @@ export class EmployeeInputFormComponent {
     this.displayModal = false;
   }
 
-  modalContextMap: any = {
-    AddResetMode: {
-      content: 'Are you sure you want to clear the form?',
-      positiveBtnContent: 'Yes',
-      negativeBtnContent: 'No',
-      header: '',
-      caller: 'AddResetMode',
-    },
-    EditResetMode: {
-      content: 'Are you sure you want to reset changes?',
-      positiveBtnContent: 'Yes',
-      negativeBtnContent: 'No',
-      header: '',
-      caller: 'EditResetMode',
-    },
-    AddMode: {
-      content: 'Are you sure you want submit?',
-      positiveBtnContent: 'Yes',
-      negativeBtnContent: 'No',
-      header: '',
-      caller: 'AddMode',
-    },
-    EditMode: {
-      content: 'Are you sure you want to update?',
-      positiveBtnContent: 'Yes',
-      negativeBtnContent: 'No',
-      header: '',
-      caller: 'EditMode',
-    }
-  };
+modalContextMap: any = {
+  AddResetMode: {
+    content: 'Do you want to clear the form and discard all changes?',
+    positiveBtnContent: 'Clear Form',
+    negativeBtnContent: 'Cancel',
+    header: 'Confirm Action',
+    caller: 'AddResetMode',
+  },
+  EditResetMode: {
+    content: 'Do you want to reset the changes made to the form?',
+    positiveBtnContent: 'Reset Changes',
+    negativeBtnContent: 'Cancel',
+    header: 'Confirm Action',
+    caller: 'EditResetMode',
+  },
+  AddMode: {
+    content: 'Are you sure you want to submit this form?',
+    positiveBtnContent: 'Submit',
+    negativeBtnContent: 'Cancel',
+    header: 'Confirm Submission',
+    caller: 'AddMode',
+  },
+  EditMode: {
+    content: 'Do you want to update the resource details with the changes made?',
+    positiveBtnContent: 'Update',
+    negativeBtnContent: 'Cancel',
+    header: 'Confirm Update',
+    caller: 'EditMode',
+  }
+};
+
 
   // SetModalValues(mode: string) {
   //   this.modalState.header = this.headerMap[mode];
