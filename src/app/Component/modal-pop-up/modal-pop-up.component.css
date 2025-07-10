@@ -1,0 +1,85 @@
+* {
+    box-sizing: border-box;
+}
+
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    /* backdrop-filter: blur(3px); */
+    /* pointer-events: none; */
+}
+
+
+.modal-body {
+    background-color: white;
+    padding: 20px;
+    /* height: 150px; */
+    max-width: 400px;
+    /* min-width: 300px; */
+    /* border: solid 2px rgba(0, 0, 0, 0.6); */
+    /* border: solid 2px rgba(0, 0, 255, 0.178); */
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.276);
+    box-shadow: 0 6px 6px 2px rgba(0, 0, 0, 0.08);
+
+}
+
+.modal-header {
+    color: #424242;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 7px;
+}
+
+.modal-content {
+    color: #1a1a1a;
+    margin-bottom: 20px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 5px;
+    gap: 17px;
+    /* outline: auto; */
+}
+
+.positive-btn, .negative-btn {
+    /* margin: 5px 10px; */
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    /* height: 20px;
+    width: 40px; */
+    color: white;
+    background-color: blue;
+}
+
+.positive-btn:hover {
+    background-color: rgb(0, 0, 195);
+}
+
+.negative-btn {
+    color: white;
+    background-color: red;
+}
+
+.negative-btn:hover {
+    background-color: rgb(212, 0, 0);
+}
+
+button:hover {
+    cursor: pointer;
+}

@@ -1,0 +1,55 @@
+<!-- <nav>
+    <div class="nav-front">
+        <span class="material-symbols-outlined logo">
+            dashboard
+        </span>
+        <h2 class="application-name">Employee Resource Tracker</h2>
+    </div>
+    <div class="nav-buttons">
+        <button class="expand-button" (click)="NavigateToTab('/Resource-grid')"><span class="material-symbols-outlined">
+                home
+            </span>Home
+        </button>
+        <button class="expand-button" (click)="NavigateToTab('/Resource-grid')"><span class="material-symbols-outlined">
+                article
+            </span>
+            Resources
+        </button>
+        <button class="expand-button" (click)="NavigateToTab('/Add')"><span class="material-symbols-outlined">
+                add_box
+            </span>
+            <div class="expandable-content">Add Resource</div>
+        </button>
+    </div>
+</nav>
+
+<router-outlet></router-outlet> -->
+
+<div class="rt-container">
+    <div class="sidebar">
+        <div class="nav-buttons">
+
+            <div [class]="getStyles(['Dashboard'])" (click)="NavigateToTab('Dashboard')">
+                home
+            </div>
+
+            <div [class]="getStyles(['List'])" (click)="NavigateToTab('List')">
+                article
+            </div>
+
+            <div [class]="getStyles(['Add', 'Edit'])" (click)="NavigateToTab('Add')">
+                {{ GetButtonIcon() }}
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="title" >Resource Tracker Application</div>
+        <div class="information-container">
+            <div class="info-title"> {{ GetTitleText() }} </div>
+            <div class="info-content"> {{ GetConetntText() }}</div>
+        </div>
+        <div class="content-wrapper">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

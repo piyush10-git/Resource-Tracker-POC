@@ -1,0 +1,58 @@
+<div class="modal-overlay" *ngIf="isVisible">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Resource Details</h2>
+      <button class="close-btn" (click)="OnButtonClick(false)">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="details-grid">
+        <div class="label">Employee ID:</div>
+        <div class="value">{{ resource?.empId }}</div>
+
+        <div class="label">Resource Name:</div>
+        <div class="value">{{ resource?.resourceName }}</div>
+
+        <div class="label">Designation:</div>
+        <div class="value">{{ resource?.designation }}</div>
+
+        <div class="label">Reporting To:</div>
+        <div class="value">{{ resource?.reportingTo }}</div>
+
+        <div class="label">Billable:</div>
+        <div class="value">
+          <span [class.billable]="resource?.billable === 'Yes'" [class.non-billable]="resource?.billable === 'No'">
+            {{ resource?.billable }}
+          </span>
+        </div>
+
+        <div class="label">Technology/Skill:</div>
+        <div class="value">{{ resource?.technologySkill }}</div>
+
+        <div class="label">Project:</div>
+        <div class="value">{{ resource?.projectAllocation }}</div>
+
+        <div class="label">Location:</div>
+        <div class="value">{{ resource?.location }}</div>
+
+        <div class="label">Email ID:</div>
+        <div class="value">
+          {{ resource?.emailId }}
+        </div>
+
+        <div class="label">CTE DOJ:</div>
+        <div class="value">{{ resource?.cteDoj }}</div>
+
+        <div class="label" *ngIf="resource?.remarks">Remarks:</div>
+        <div class="value" *ngIf="resource?.remarks">{{ resource?.remarks }}</div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="primary-btn" (click)="OnEditClicked()"><span class="material-symbols-outlined">
+                    edit
+                </span>Edit</button>
+      <button class="primary-btn" (click)="OnButtonClick(false)">Close</button>
+    </div>
+  </div>
+</div>

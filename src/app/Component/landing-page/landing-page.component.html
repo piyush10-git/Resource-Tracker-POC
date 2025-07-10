@@ -1,0 +1,58 @@
+<!-- <div class="landing-page-wrapper"> -->
+<div class="card-wrappper">
+    <h2>Key Metrics</h2>
+    <p class="section-description">
+        A quick snapshot of the current resource distribution, project involvement, and overall billability.
+    </p>
+    <div class=" card-container">
+        <div class="card-body total-resources">
+            <div *ngIf="!loading" class="title">
+                Total Resource
+            </div>
+            <div *ngIf="!loading" class="bottom">
+                <div class="value-div"> {{ ResourceStatistics.resourceCount }}</div>
+                <span class="material-symbols-outlined">
+                    group
+                </span>
+            </div>
+            <div *ngIf="loading" class="loader"></div>
+
+        </div>
+        <div class="card-body billable">
+            <div *ngIf="!loading" class="title">
+                Billable</div>
+            <div *ngIf="!loading" class="value-div">{{ ResourceStatistics.billableResourcesCount }}</div>
+            <span *ngIf="!loading" class="material-symbols-outlined">
+                cases
+            </span>
+            <div *ngIf="loading" class="loader"></div>
+
+        </div>
+        <div class="card-body active-project">
+            <div *ngIf="!loading" class="title">Active Projects</div>
+            <div *ngIf="!loading" class="value-div">{{ ResourceStatistics.totalProject }}</div>
+            <span *ngIf="!loading" class="material-symbols-outlined">
+                view_kanban
+            </span>
+            <div *ngIf="loading" class="loader"></div>
+        </div>
+        <div class="card-body non-billable">
+            <div *ngIf="!loading" class="title">Unallocated</div>
+            <div *ngIf="!loading" class="value-div">{{ ResourceStatistics.NonbillableResourcesCount }}</div>
+            <span *ngIf="!loading" class="material-symbols-outlined">
+                bedtime
+            </span>
+            <div *ngIf="loading" class="loader"></div>
+        </div>
+    </div>
+</div>
+<div class="wrappper">
+    <h2>Quick Actions</h2>
+    <div class="button-container">
+        <button class="btn" (click)="NavigateToTab('List')">
+            Resource Grid</button>
+        <button class="btn" (click)="NavigateToTab('Add')">
+            Add New Resource</button>
+    </div>
+</div>
+<!-- </div> -->

@@ -1,0 +1,163 @@
+<!-- <kendo-grid [kendoGridBinding]="gridData" [pageSize]="10" [pageable]="true" [sortable]="true" [filterable]="true"
+    [groupable]="true" [height]="500">
+    <kendo-grid-column field="CompanyName" [width]="140"></kendo-grid-column>
+    <kendo-grid-column field="ContactName" [width]="120"></kendo-grid-column>
+    <kendo-grid-column field="City" [width]="100"></kendo-grid-column>
+    <kendo-grid-column field="ContactTitle" [width]="130"></kendo-grid-column>
+</kendo-grid> -->
+
+<!-- <div class="Kendo-grid-container"> -->
+
+<!-- <kendo-grid [kendoGridBinding]="gridData" [pageSize]="10" [pageable]="true" [sortable]="true" [filterable]="true"
+    [height]="500">
+    <kendo-grid-column field="empId" title="EMP ID" [width]="70">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span class="empId-cell">
+          {{ 'E'+ dataItem.empId}}
+        </span>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="resourceName" title="Name" [width]="150"></kendo-grid-column>
+    <kendo-grid-column field="designation" title="Role" [width]="140"></kendo-grid-column>
+    <kendo-grid-column field="projectAllocation" title="Project" [width]="180"></kendo-grid-column>
+    <kendo-grid-column field="billable" title="Billable" [width]="90"></kendo-grid-column>
+
+    <kendo-grid-column title="Actions" [width]="120">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <button class="edit-button" (click)="EditResource(dataItem.empId)" title="Edit"><span
+            class="material-symbols-outlined">
+            edit
+          </span></button>
+        <button (click)="DeleteResource(dataItem.empId)" title="Delete"><span class="material-symbols-outlined">
+            delete
+          </span></button>
+      </ng-template>
+    </kendo-grid-column>
+
+    <ng-template kendoGridDetailTemplate let-dataItem>
+      <div class="detail-container">
+        <p><strong>Email:</strong> {{ dataItem.emailId }}</p>
+        <p><strong>Location:</strong> {{ dataItem.location }}</p>
+        <p><strong>DOJ:</strong> {{ dataItem.cteDoj }}</p>
+        <p><strong>Reporting To:</strong> {{ dataItem.reportingTo }}</p>
+        <p><strong>Skills:</strong> {{ dataItem.technologySkill }}</p>
+        <p><strong>Remarks:</strong> {{ dataItem.remarks }}</p>
+      </div>
+    </ng-template>
+  </kendo-grid> -->
+
+
+<!-- <kendo-grid [kendoGridBinding]="gridData" [pageSize]="5" [pageable]="true" [sortable]="{ mode: 'multiple' }"
+        [navigable]="true" [style.width.%]="gridWidth" [sortable]="{ mode: 'multiple' }" [filterable]="'menu'"
+        [columnMenu]="true"> -->
+
+<!-- <div class="example-config">
+      <kendo-checkbox
+        [(ngModel)]="requireSelectOrCtrlKeys"
+        #checkbox
+      ></kendo-checkbox>
+      <kendo-label
+        [for]="checkbox"
+        class="k-checkbox-label"
+        text="Require Ctrl or Shift keys for multiple selection"
+      ></kendo-label>
+    </div> -->
+
+<div class="Kendo-grid-container">
+  <kendo-grid
+  [kendoGridBinding]="gridData"
+  [loading]="loading"
+  [selectable]="{
+    mode: 'multiple',
+    metaKeyMultiSelect: this.requireSelectOrCtrlKeys
+  }"
+  [selectedKeys]="selectedKeys" (selectionChange)="onSelectionChange($event)" kendoGridSelectBy="empId"
+    [sortable]="{mode : 'multiple'}" [filterable]="true" [pageable]="true" [pageSize]="7">
+
+    <kendo-toolbar overflow="scroll">
+      <kendo-toolbar-button kendoGridFilterTool></kendo-toolbar-button>
+
+      <kendo-toolbar-button kendoGridSortTool></kendo-toolbar-button>
+      <kendo-toolbar-button kendoGridGroupTool></kendo-toolbar-button>
+      <kendo-toolbar-separator></kendo-toolbar-separator>
+      <kendo-toolbar-button kendoGridColumnChooserTool></kendo-toolbar-button>
+
+      <kendo-toolbar-button id="Delete-btn" [text]="GetDeleteTitle()" (click)="OnDeleteClick()"></kendo-toolbar-button>
+
+      <kendo-toolbar-spacer></kendo-toolbar-spacer>
+      <kendo-toolbar-button id="Delete-btn" [text]="'Add Resource'"
+        (click)="OnAddResourceClick()"></kendo-toolbar-button>
+        <kendo-toolbar-button id="Delete-btn" [text]="'PDF'"
+        (click)="DownloadMultiSelectedPDF()"></kendo-toolbar-button>
+      <!-- <kendo-toolbar-button kendoGridPDFTool></kendo-toolbar-button> -->
+      <kendo-toolbar-button kendoGridExcelTool></kendo-toolbar-button>
+    </kendo-toolbar>
+
+    <kendo-grid-checkbox-column [showSelectAll]="true" [width]="35"></kendo-grid-checkbox-column>
+
+    <kendo-grid-column field="empId" title="EMP ID" [width]="70">
+      <!-- <ng-template kendoGridCellTemplate let-dataItem>
+        <span class="empId-cell">
+          {{ 'E'+ dataItem.empId }}
+        </span>
+      </ng-template>-->
+    </kendo-grid-column>
+    <kendo-grid-column field="resourceName" title="Name" [width]="150"></kendo-grid-column>
+    <kendo-grid-column field="designation" title="Role" [width]="140"></kendo-grid-column>
+    <kendo-grid-column field="projectAllocation" title="Project" [width]="160"></kendo-grid-column>
+    <kendo-grid-column field="technologySkill" title="Skills" [width]="150" [hidden]="true"></kendo-grid-column>
+    <kendo-grid-column field="location" title="Location" [width]="95"></kendo-grid-column>
+    <kendo-grid-column field="emailId" title="Email Id" [width]="150" [hidden]="true"></kendo-grid-column>
+    <kendo-grid-column field="billable" title="Billable" [width]="75" [hidden]="true"></kendo-grid-column>
+    <kendo-grid-column field="reportingTo" title="Reporting to" [width]="100" [hidden]="true"></kendo-grid-column>
+    <kendo-grid-column field="cteDoj" title="Date Of Joining" [width]="100" [hidden]="true"></kendo-grid-column>
+    <kendo-grid-column field="remarks" title="Remarks" [width]="200" [hidden]="true" ></kendo-grid-column>
+    <kendo-grid-column title="Actions" [width]="90">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span (click)="EditResource($event, dataItem.empId)" title="Edit"
+          class="material-symbols-outlined edit-btn">
+          edit
+        </span>
+        <span (click)="ShowDetail($event, dataItem)" title="View more"
+          class="material-symbols-outlined edit-btn">
+          call_made
+        </span>
+        <span (click)="DownloadPDF($event, dataItem)" title="View more"
+          class="material-symbols-outlined edit-btn">
+          picture_as_pdf
+        </span>
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-pdf fileName="Resources.pdf" [delay]="1000" [allPages]="true" paperSize="A4" [repeatHeaders]="true"
+      [landscape]="true">
+    </kendo-grid-pdf>
+    <kendo-grid-excel fileName="Resources.xlsx" [fetchData]="allData.bind(this)"></kendo-grid-excel>
+  </kendo-grid>
+</div>
+
+<app-modal-pop-up [isVisible]="modalState.deleteModalVisible" [context]="deleteModalContext" (modal-event-handler)="HandleModalEvent($event)"></app-modal-pop-up>
+
+<app-details-modal [isVisible]="modalState.detailsModalVisible" [resource]="detailsResource"
+  (modal-event)="HandleDetailsModalEvent($event)"></app-details-modal>
+
+
+
+<!-- <kendo-grid
+  [kendoGridBinding]="gridData"
+  [filterable]="true"
+  [sortable]="true"
+  >
+
+  <kendo-grid-column field="empId">
+  </kendo-grid-column>
+  <kendo-grid-column field="resourceName">
+  </kendo-grid-column>
+  <kendo-grid-column field="skills">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <span (click)="Log(dataItem.skills)">
+        {{dataItem.skills}}
+      </span>
+    </ng-template>
+  </kendo-grid-column>
+</kendo-grid> -->

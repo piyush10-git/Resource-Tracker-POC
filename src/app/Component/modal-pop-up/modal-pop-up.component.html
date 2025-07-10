@@ -1,0 +1,10 @@
+<div *ngIf="isVisible" class="modal-container">
+    <div class="modal-body">
+        <div class="modal-header"> {{ modalContext.header }} </div>
+        <div class="modal-content"> {{ modalContext.content }} </div>
+        <div class="action-btn">
+            <button (click)="OnButtonClick(true)" class="positive-btn"> {{ modalContext.positiveBtnContent }} </button>
+            <button (click)="OnButtonClick(false)" class="negative-btn"> {{ modalContext.negativeBtnContent }} </button>
+        </div>
+    </div>
+</div>

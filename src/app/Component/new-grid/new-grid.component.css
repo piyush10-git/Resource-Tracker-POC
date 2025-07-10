@@ -1,0 +1,80 @@
+* {
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    margin: 0px;
+}
+
+.Kendo-grid-container {
+    /* margin: 35px 30px; */
+    /* max-width: 900px; */
+    /* border-radius: 40px; */
+    border-radius: 10px;
+    overflow: hidden;
+    border: solid 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 6px 2px rgba(0, 0, 0, 0.08);
+    padding: 5px;
+    background-color: white;
+    /* box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.08); */
+    /* box-shadow: 0px 0px 6px 4px rgba(0, 0, 255, 0.08); */
+    /* outline: auto; */
+}
+
+.grid-cell {
+    display: flex;
+    padding: 5px;
+}
+
+/* .reset-button, .edit-button {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+} */
+
+/* .edit-button {
+    background-image: url('../../../assets/edit.svg');
+}
+
+.reset-button {
+  background-image: url('../../../assets/delete.svg');
+} */
+
+
+button {
+    margin: 3px;
+    border-radius: 10px;
+    padding: 5px;
+    min-width:60px;
+    color: white;
+    background-color: red;
+    border: solid 2px white;
+}
+
+button:hover {
+    cursor: pointer;
+}
+/* .material-symbols-outlined {
+    
+} */
+
+.edit-button {
+    background-color: rgb(120, 166, 207);
+    background-color: #4E71FF;
+}
+
+.empId-cell {
+    display: flex;
+    justify-content: center;
+}
+
+input {
+    color: #444;
+}
+
+.edit-btn {
+    color: #555;
+    cursor: pointer;
+    margin: 0px 3px;
+}

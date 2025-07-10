@@ -1,0 +1,185 @@
+* {
+  transition-duration: 0.3s;
+}
+/* 
+
+nav {
+  margin: 0 auto;
+  background-color: #093FB4;
+  background-color: #3674B5;
+  background-color: #4682A9;
+  background-color: #4300FF;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px;
+}
+
+.nav-front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.logo {
+  text-align: center;
+  border: solid 2px #4300FF;
+}
+
+.logo:hover {
+  border: solid 2px white;
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.75);
+}
+
+h2 {
+  font-size: 1.25rem;
+  color: white;
+}
+
+button {
+  margin: 4px;
+  padding: 7px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  border-radius: 5px;
+  background: none;
+  color: white;
+  border: solid 2px #4300FF;
+}
+
+button:hover {
+  cursor: pointer;
+  border: solid 2px white;
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.75);
+}
+
+
+.material-symbols-outlined {
+  height: 24px;
+  width: 24px;
+  margin-right: 4px;
+  color: inherit;
+}
+
+
+.theme {
+  color: white;
+}
+
+.material-symbols-outlined {
+  color: white;
+} */
+
+
+
+
+
+.rt-container {
+  min-height: 100%;
+  min-width: 100%;
+  display: flex;
+  align-items: stretch;
+}
+
+.sidebar {
+  background-color: #4300FF;
+  /* background-image: url('../../../assets/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover; */
+  min-width: 75px;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-content {
+  height: 100dvh;
+  flex: 1;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.material-symbols-outlined {
+  height: 40px;
+  width: 40px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  color: #4300FF;
+  background-color: white;
+  cursor: pointer;
+  border: solid 2px #4300FF;
+  
+}
+
+.title {
+  padding: 15px 0px;
+  text-align: center;
+  width: 100%;
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+  letter-spacing: 1px;
+}
+
+.information-container {
+  padding: 30px 45px;
+  /* background-image: url('https://www.cambridgetech.com/wp-content/themes/cambridge/assets/images/logo-white.svg'); */
+  /* background-position: right; */
+  /* background-size: cover; */
+  /* background-repeat: no-repeat; */
+  /* background-size: 200px; */
+
+  /* background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdlLoa51Qu_4WszrVDBFQ4OLA3XEisj0K6BQ&s'); */
+  background-image: url('../../../assets/bg.jpg');
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+  /* background-color: rgba(0, 0, 0, 0.087); */
+  /* opacity: 0.5; */
+}
+
+.info-title {
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  color: black;
+}
+
+.info-content {
+  color: #1a1a1a;
+}
+
+.content-wrapper {
+  padding: 30px 35px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.not-selected {
+  color: white;
+  background-color: #4300FF;
+}
+
+.not-selected:hover {
+  border: solid 2px white;
+}

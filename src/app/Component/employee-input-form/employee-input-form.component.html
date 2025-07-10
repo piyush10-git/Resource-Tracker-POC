@@ -1,0 +1,226 @@
+<div class="form-container">
+    <form [formGroup]="employeeForm" (submit)="OnSubmitClick()">
+        <div *ngIf="isEditMode" class="section-container">
+            <div class="group-info">
+                <div class="group-info-title">
+                    Employee Id
+                </div>
+                <div class="group-info-content">
+                    This is the unique identifier assigned to the employee. It cannot be edited. </div>
+            </div>
+
+            <div class="form-section">
+                <!-- <h3>Additional Information</h3> -->
+                <div class="form-group">
+                    <label for="remarks">Employee Id</label>
+                    <input id="empId" name="Employee ID" [disabled]="true" [value]="empId">
+                </div>
+            </div>
+        </div>
+        <!-- Section 1: Basic Details -->
+        <div class="section-container">
+            <div class="group-info">
+                <div class="group-info-title">
+                    Basic Details
+                </div>
+                <div class="group-info-content">
+                    Provides essential employee information used for identification, communication, and record-keeping
+                    across systems.
+                </div>
+            </div>
+            <div class="form-section">
+                <!-- <h3>Basic Details</h3> -->
+                <div class="form-grid">
+                    <!-- <div class="form-group">
+                    <label for="empId">Employee ID
+                        <span>It is unique</span>
+                    </label>
+                    <input type="number" id="empId" name="empId" formControlName="empId" />
+                    <div *ngIf="getValidation('empId', ['required'])" class="invalid">Employee ID is required</div>
+                    <div *ngIf="getValidation('empId', ['min'])" class="invalid">Employee ID must be greater than zero.
+                    </div>
+                </div> -->
+
+                    <div class="form-group">
+                        <label for="resourceName">Resource Name<span class="required">*</span></label>
+                        <input type="text" id="resourceName" name="resourceName" placeholder="Employee Name"
+                            formControlName="resourceName" />
+                        <div *ngIf="getValidation('resourceName', ['required'])" class="invalid">Please enter the
+                            employee's
+                            name</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email ID<span class="required">*</span></label>
+                        <input type="email" id="email" name="email" formControlName="emailId" placeholder="Email Id">
+                        <div *ngIf="emailValidationLoading" class="email-validation-loader">
+                            <div class="slider"></div>
+                        </div>
+                        <div *ngIf="getValidation('emailId', ['email'])" class="invalid">Email address is required.
+                        </div>
+                        <div *ngIf="getValidation('emailId', ['required'])" class="invalid">Please enter a valid email
+                            address.</div>
+                        <div *ngIf="getValidation('emailId', ['emailTaken'])" class="invalid">
+                            This email is already taken.
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="doj">Date Of Joining<span class="required">*</span></label>
+                        <input type="date" id="doj" name="doj" formControlName="cteDoj"
+                            placeholder="DD-MM-YYYY" />
+                        <div *ngIf="getValidation('cteDoj', ['required'])" class="invalid">Date of joining is required
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Location<span class="required">*</span></label>
+                        <input type="text" id="location" name="location" formControlName="location"
+                            placeholder="Enter Office Location" />
+                        <div *ngIf="getValidation('location', ['required'])" class="invalid">Location cannot be empty.
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="br"></div>
+
+        <!-- Section 2: Role & Reporting -->
+        <div class="section-container">
+            <div class="group-info">
+                <div class="group-info-title">
+                    Role & Reporting
+                </div>
+                <div class="group-info-content">
+                    Select the role, reporting manager, and billable status of the resource.
+                </div>
+            </div>
+
+            <div class="form-section">
+                <!-- <h3>Role & Reporting</h3> -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="designation">Designation<span class="required">*</span></label>
+                        <input type="text" id="designation" name="designation" formControlName="designation"
+                            placeholder="Enter Designation" />
+                        <div *ngIf="getValidation('designation', ['required'])" class="invalid">Please enter the
+                            designation
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reportingTo">Reporting To<span class="required">*</span></label>
+                        <input type="text" id="reportingTo" name="reportingTo" formControlName="reportingTo"
+                            placeholder="Enter Reporting To" />
+                        <div *ngIf="getValidation('reportingTo', ['required'])" class="invalid">Please provide the name
+                            of the reporting manager.</div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="billable">Billable<span class="required">*</span></label>
+                        <!-- <div class="radio-group"> -->
+                        <select id="billable" class="custom-select" formControlName="billable">
+                            <option value="" disabled hidden>Select</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        <div *ngIf="getValidation('billable', ['required'])" class="invalid">Please select if the
+                            employee is billable.</div>
+
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Skills & Project -->
+        <div class="section-container">
+            <div class="group-info">
+                <div class="group-info-title">
+                    Skills & Project
+                </div>
+                <div class="group-info-content">
+                    Add the resource’s main skills and their current project assignment.
+                </div>
+            </div>
+
+            <div class="form-section">
+                <!-- <h3>Skills & Project</h3> -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="skills">
+                            <pre>Technology / Skill</pre><span class="required">*</span>
+                        </label>
+                        <input type="text" id="skills" name="skills" placeholder="e.g. Angular, Java"
+                            formControlName="technologySkill"/>
+                        <div *ngIf="getValidation('technologySkill', ['required'])" class="invalid">Please specify at
+                            least
+                            one skill
+                            or technology.</div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project">Project Allocation<span class="required">*</span></label>
+                        <input type="text" id="project" name="project" formControlName="projectAllocation" placeholder="Enter Project"/>
+                        <div *ngIf="getValidation('projectAllocation', ['required'])" class="invalid">Project name is
+                            required.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Additional Info -->
+        <div class="section-container">
+            <div class="group-info">
+                <div class="group-info-title">
+                    Additional Information
+                </div>
+                <div class="group-info-content">
+                    Include any extra notes or comments about the resource
+                </div>
+            </div>
+
+            <div class="form-section">
+                <!-- <h3>Additional Information</h3> -->
+                <div class="form-group full-width">
+                    <label for="remarks">Remarks</label>
+                    <textarea id="remarks" name="remarks" rows="3" formControlName="remarks" placeholder="Add Remarks"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+
+            <button type='submit' [class]="GetStylesClass()">
+                @if(!isEditMode) {
+                <span class="material-symbols-outlined">
+                    arrow_insert
+                </span>Submit
+                }
+                @else {
+                <span class="material-symbols-outlined">
+                    Edit
+                </span>Update
+                }
+            </button>
+
+            <button type="button" class="btn secondary" (click)="OnResetClick()">
+                <span class="material-symbols-outlined">
+                    autorenew
+                </span>
+                {{ isEditMode ? 'Reset' : 'Clear'}}
+            </button>
+        </div>
+
+    </form>
+</div>
+
+<app-modal-pop-up [isVisible]="displayModal" [context]="modalContext"
+    (modal-event-handler)="HandleModalEvent($event)"></app-modal-pop-up>
