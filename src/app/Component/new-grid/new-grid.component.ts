@@ -19,6 +19,7 @@ import { process } from "@progress/kendo-data-query";
 import { DetailsModalComponent } from '../details-modal/details-modal.component';
 import { DownloadPdf } from '../../UtilityFunctions/ObjectToPDF';
 import { ToastrService } from 'ngx-toastr';
+import { AppStateServiceService } from '../../Services/app-state-service.service';
 
 @Component({
   selector: 'app-new-grid',
@@ -50,22 +51,9 @@ export class NewGridComponent {
   detailsResource!: Resource;
 
   gridData: Array<Resource> = [];
-  constructor(private httpAPIClientService: HttpAPIClientService, private router: Router, private toastr: ToastrService) { }
+  constructor(private httpAPIClientService: HttpAPIClientService, private router: Router, private toastr: ToastrService, private appStateService: AppStateServiceService) { }
 
   deleteModalContent!: string;
-
-  Log(param: any) {
-    console.log("Hi");
-    alert(param);
-  }
-
-  Sort(param: any) {
-    console.log(param);
-  }
-
-  Filter(param: any) {
-    console.log(param);
-  }
 
   GetAllResourcesData() {
     this.loading = true;
@@ -81,11 +69,8 @@ export class NewGridComponent {
   }
 
   ngOnInit() {
+    this.selectedKeys = this.appStateService.GetData('selectedKeys') || [];
     this.GetAllResourcesData();
-  }
-
-  ngOnChanges() {
-    // console.log("Grid Data", this.gridData);
   }
 
   EditResource(event: any, empId: number) {
@@ -111,6 +96,7 @@ export class NewGridComponent {
     }
     const data = this.gridData.filter((rowData: any) => this.selectedKeys.includes(rowData?.empId));
     DownloadPdf(data);
+    this.selectedKeys = [];
   }
 
   OnDeleteClick() {
@@ -143,6 +129,8 @@ export class NewGridComponent {
         console.log('Deleted successfuly');
         this.GetAllResourcesData();
         this.toastr.success('Deleted successfully', 'Delete');
+        this.selectedKeys = [];
+        this.appStateService.SetData('selectedKeys', this.selectedKeys);
         this.modalState.deleteModalVisible = false;
       })
     }
@@ -175,6 +163,8 @@ export class NewGridComponent {
     })
 
     console.log(this.selectedKeys);
+    // Update the app state service with the selected keys
+    this.appStateService.SetData('selectedKeys', this.selectedKeys);
     // console.log("Selected Rows Data:", event.selectedRows.map((row: any) => row.dataItem));
   }
 
@@ -186,4 +176,37 @@ export class NewGridComponent {
     return 'Delete';
     return this.selectedKeys.length > 1 ? "Delete Multiple" : "Delete";
   }
+
+
+  // // Import excel file
+  // OnImportExcelClick() {
+  //   // we can use a file input to select the excel file and then process it.
+  //   // For now, we will just show a message that the functionality is not implemented yet.
+  //   // You can use libraries like xlsx or SheetJS to read excel files in Angular.
+  //   // For example, you can use the following code to read an excel file:
+  //   const fileInput = document.createElement('input');
+  //   fileInput.type = 'file';
+  //   fileInput.accept = '.xlsx, .xls';
+  //   fileInput.onchange = (event: any) => {
+  //     const file = event.target.files[0];
+  //     if (file) {
+  //       const reader = new FileReader();
+  //       reader.onload = (e: any) => {
+  //         const data = e.target.result;
+  //         // Use a library like xlsx to parse the data
+  //         const workbook =  .read(data, { type: 'binary' });
+  //         const sheetName = workbook.SheetNames[0];
+  //         const sheet = workbook.Sheets[sheetName];
+  //         const jsonData = XLSX.utils.sheet_to_json(sheet);
+  //         // Process the jsonData as needed
+  //       };
+  //       reader.readAsBinaryString(file);
+  //     }
+  //   };
+  //   fileInput.click();
+
+  //   // Implement the logic to import excel file
+
+  //   this.toastr.info('Import Excel functionality is not implemented yet', 'Info');
+  // }
 }

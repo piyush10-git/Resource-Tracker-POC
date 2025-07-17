@@ -3,6 +3,8 @@ import { Resource } from '../../Interfaces/Interfaces';
 import { EmployeeInputFormComponent } from '../employee-input-form/employee-input-form.component';
 import { HttpAPIClientService } from '../../Services/http-api-client.service';
 import { Router, RouterOutlet } from '@angular/router';
+import { Location } from '@angular/common';
+import { NavigationService } from '../../Services/navigation.service';
 
 @Component({
   selector: 'app-resource-tracker',
@@ -45,11 +47,18 @@ export class ResourceTrackerComponent {
     Edit: 'Update the resource’s information including role, project, skills, and other relevant details. Use this section to maintain accurate and up-to-date records.',
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private location: Location, private navigationService: NavigationService) { }
 
   NavigateToTab(currentTab: string) {
-    this.currentTab = currentTab;
-    this.router.navigate([this.routeMap[currentTab]]);
+    this.navigationService.NavigateToTab(currentTab);
+  }
+
+  OnBackButtonClick() {
+    this.navigationService.OnBackButtonClick();
+  }
+
+  GetBackButtonStatus(): boolean {
+    return this.navigationService.GetBackButtonVisible;
   }
 
   getStyles(tabNames: Array<string>) {
@@ -59,7 +68,6 @@ export class ResourceTrackerComponent {
         break;
       }
     }
-    // console.log(this.currentTab);
 
     let style = 'material-symbols-outlined';
     let isThisCurrentTab = false;

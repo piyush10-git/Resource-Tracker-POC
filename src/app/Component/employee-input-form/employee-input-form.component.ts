@@ -141,6 +141,7 @@ export class EmployeeInputFormComponent {
           this.toastr.success('Resource Added successfully', 'Add');
           console.log(response);
           this.employeeForm.reset();
+          this.router.navigate(['/Resource-Grid']);
         }
       });
     } else {

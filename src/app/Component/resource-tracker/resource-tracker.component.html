@@ -43,12 +43,15 @@
         </div>
     </div>
     <div class="main-content">
-        <div class="title" >Resource Tracker Application</div>
+        <div class="title">Resource Tracker Application</div>
         <div class="information-container">
             <div class="info-title"> {{ GetTitleText() }} </div>
             <div class="info-content"> {{ GetConetntText() }}</div>
         </div>
         <div class="content-wrapper">
+            <div [hidden]="!GetBackButtonStatus()" class="bread-crumb" (click)="OnBackButtonClick()" ><span class="material-symbols-outlined bread-crumb-icon">
+                    keyboard_backspace
+                </span>back</div>
             <router-outlet></router-outlet>
         </div>
     </div>

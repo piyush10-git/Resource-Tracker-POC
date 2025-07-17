@@ -127,9 +127,9 @@ button:hover {
   color: #4300FF;
   background-color: white;
   cursor: pointer;
-  border: solid 2px #4300FF;
-  
+  border: solid 2px #4300FF; 
 }
+
 
 .title {
   padding: 15px 0px;
@@ -182,4 +182,28 @@ button:hover {
 
 .not-selected:hover {
   border: solid 2px white;
+}
+
+.bread-crumb {
+  /* outline: auto; */
+  color: grey;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  /* padding: 10px; */
+  /* border-radius: 5px; */
+  /* outline: auto; */
+  width: fit-content;
+}
+
+.bread-crumb-icon {
+  height: 24px;
+  width: 24px;
+  color: grey;
+  border: none;
+  background: none;
 }

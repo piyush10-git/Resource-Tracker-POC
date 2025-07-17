@@ -64,14 +64,10 @@
     </div> -->
 
 <div class="Kendo-grid-container">
-  <kendo-grid
-  [kendoGridBinding]="gridData"
-  [loading]="loading"
-  [selectable]="{
+  <kendo-grid [kendoGridBinding]="gridData" [loading]="loading" [selectable]="{
     mode: 'multiple',
     metaKeyMultiSelect: this.requireSelectOrCtrlKeys
-  }"
-  [selectedKeys]="selectedKeys" (selectionChange)="onSelectionChange($event)" kendoGridSelectBy="empId"
+  }" [selectedKeys]="selectedKeys" (selectionChange)="onSelectionChange($event)" kendoGridSelectBy="empId"
     [sortable]="{mode : 'multiple'}" [filterable]="true" [pageable]="true" [pageSize]="7">
 
     <kendo-toolbar overflow="scroll">
@@ -85,10 +81,11 @@
       <kendo-toolbar-button id="Delete-btn" [text]="GetDeleteTitle()" (click)="OnDeleteClick()"></kendo-toolbar-button>
 
       <kendo-toolbar-spacer></kendo-toolbar-spacer>
+      <!-- <kendo-toolbar-button id="Import-excel-btn" [text]="'Import Excel'"
+        (click)="OnImportExcelClick()"></kendo-toolbar-button> -->
       <kendo-toolbar-button id="Delete-btn" [text]="'Add Resource'"
         (click)="OnAddResourceClick()"></kendo-toolbar-button>
-        <kendo-toolbar-button id="Delete-btn" [text]="'PDF'"
-        (click)="DownloadMultiSelectedPDF()"></kendo-toolbar-button>
+      <kendo-toolbar-button id="Pdf-btn" [text]="'PDF'" (click)="DownloadMultiSelectedPDF()"></kendo-toolbar-button>
       <!-- <kendo-toolbar-button kendoGridPDFTool></kendo-toolbar-button> -->
       <kendo-toolbar-button kendoGridExcelTool></kendo-toolbar-button>
     </kendo-toolbar>
@@ -104,26 +101,23 @@
     </kendo-grid-column>
     <kendo-grid-column field="resourceName" title="Name" [width]="150"></kendo-grid-column>
     <kendo-grid-column field="designation" title="Role" [width]="140"></kendo-grid-column>
-    <kendo-grid-column field="projectAllocation" title="Project" [width]="160"></kendo-grid-column>
+    <kendo-grid-column field="projectAllocation" title="Project" [width]="125"></kendo-grid-column>
     <kendo-grid-column field="technologySkill" title="Skills" [width]="150" [hidden]="true"></kendo-grid-column>
     <kendo-grid-column field="location" title="Location" [width]="95"></kendo-grid-column>
-    <kendo-grid-column field="emailId" title="Email Id" [width]="150" [hidden]="true"></kendo-grid-column>
+    <kendo-grid-column field="emailId" title="Email Id" [width]="150"></kendo-grid-column>
     <kendo-grid-column field="billable" title="Billable" [width]="75" [hidden]="true"></kendo-grid-column>
     <kendo-grid-column field="reportingTo" title="Reporting to" [width]="100" [hidden]="true"></kendo-grid-column>
     <kendo-grid-column field="cteDoj" title="Date Of Joining" [width]="100" [hidden]="true"></kendo-grid-column>
-    <kendo-grid-column field="remarks" title="Remarks" [width]="200" [hidden]="true" ></kendo-grid-column>
+    <kendo-grid-column field="remarks" title="Remarks" [width]="200" [hidden]="true"></kendo-grid-column>
     <kendo-grid-column title="Actions" [width]="90">
       <ng-template kendoGridCellTemplate let-dataItem>
-        <span (click)="EditResource($event, dataItem.empId)" title="Edit"
-          class="material-symbols-outlined edit-btn">
+        <span (click)="EditResource($event, dataItem.empId)" title="Edit" class="material-symbols-outlined edit-btn">
           edit
         </span>
-        <span (click)="ShowDetail($event, dataItem)" title="View more"
-          class="material-symbols-outlined edit-btn">
+        <span (click)="ShowDetail($event, dataItem)" title="View more" class="material-symbols-outlined edit-btn">
           call_made
         </span>
-        <span (click)="DownloadPDF($event, dataItem)" title="View more"
-          class="material-symbols-outlined edit-btn">
+        <span (click)="DownloadPDF($event, dataItem)" title="View more" class="material-symbols-outlined edit-btn">
           picture_as_pdf
         </span>
       </ng-template>
@@ -136,7 +130,8 @@
   </kendo-grid>
 </div>
 
-<app-modal-pop-up [isVisible]="modalState.deleteModalVisible" [context]="deleteModalContext" (modal-event-handler)="HandleModalEvent($event)"></app-modal-pop-up>
+<app-modal-pop-up [isVisible]="modalState.deleteModalVisible" [context]="deleteModalContext"
+  (modal-event-handler)="HandleModalEvent($event)"></app-modal-pop-up>
 
 <app-details-modal [isVisible]="modalState.detailsModalVisible" [resource]="detailsResource"
   (modal-event)="HandleDetailsModalEvent($event)"></app-details-modal>
