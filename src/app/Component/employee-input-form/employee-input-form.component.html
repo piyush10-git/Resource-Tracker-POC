@@ -78,9 +78,10 @@
                         <label for="location">Location<span class="required">*</span></label>
                         <!-- <input type="text" id="location" name="location" formControlName="location"
                             placeholder="Enter Office Location" /> -->
-                        <select name="location" id="location" formControlName="location" class="custom-select" value="">
-                            <option value="" disabled hidden>Select Location</option>
-                            <option *ngFor="let location of dropdownOptionsArrayObject?.locations" [value]="location?.id">
+                        <select [value]="null" name="location" id="location" formControlName="location" class="custom-select" value="">
+                            <option [value]="null" disabled hidden>Select Location</option>
+                            <option *ngFor="let location of dropdownOptionsArrayObject?.locations"
+                                [value]="location?.id">
                                 {{ location?.name }}
                             </option>
                         </select>
@@ -114,9 +115,10 @@
                             placeholder="Enter Designation" /> -->
 
                         <select name="designation" id="designation" formControlName="designation" class="custom-select"
-                            value="">
-                            <option value="" disabled hidden>Select Designation</option>
-                            <option *ngFor="let designation of dropdownOptionsArrayObject?.designations" [value]="designation?.id">
+                            value="null">
+                            <option value="null" disabled hidden>Select Designation</option>
+                            <option *ngFor="let designation of dropdownOptionsArrayObject?.designations"
+                                [value]="designation?.id">
                                 {{ designation?.name }}
                             </option>
                         </select>
@@ -137,8 +139,8 @@
                     <div class="form-group">
                         <label for="billable">Billable<span class="required">*</span></label>
                         <!-- <div class="radio-group"> -->
-                        <select id="billable" class="custom-select" formControlName="billable">
-                            <option value="" disabled hidden>Select</option>
+                        <select [value]="" id="billable" class="custom-select" formControlName="billable">
+                            <option [value]="null" disabled hidden>Select</option>
                             <option value="Yes">Yes</option>
                             <option value="No">No</option>
                         </select>
@@ -202,7 +204,11 @@
 
                     <div class="form-group">
                         <label>Technology / Skills<span class="required">*</span></label>
-                        <div class="dropdown-container">
+                        <ng-select formControlName="technologySkill" [items]="dropdownOptionsArrayObject?.skills"
+                            bindLabel="name" bindValue="id" [multiple]="true" [searchable]="true"
+                             [closeOnSelect]="false" [clearable]="true">
+                        </ng-select>
+                        <!-- <div class="dropdown-container">
                             <div class="fake-input" (click)="toggleDropdown()">
                                 {{ selectedSkillsDisplay || 'Select skills' }}
                             </div>
@@ -215,7 +221,7 @@
                                     <label [for]="'skill-' + skill.id">{{ skill.name }}</label>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div *ngIf="getValidation('technologySkill', ['required'])" class="invalid">
                             Please specify at least one skill or technology.
                         </div>
@@ -224,21 +230,26 @@
 
                     <div class="form-group">
                         <label>Project Allocation<span class="required">*</span></label>
+                        <ng-select formControlName="projectAllocation" [items]="dropdownOptionsArrayObject?.projects"
+                            bindLabel="name" bindValue="id" [multiple]="true" [searchable]="true"
+                             [closeOnSelect]="false" [clearable]="true">
+                        </ng-select>
 
-                        <div class="dropdown-container">
+                        <!-- <div class="dropdown-container">
                             <div class="fake-input" (click)="toggleProjectDropdown()">
                                 {{ selectedProjectsDisplay || 'Select projects' }}
                             </div>
 
                             <div class="dropdown-list" *ngIf="projectsDropdownOpen">
-                                <div class="checkbox-option" *ngFor="let project of dropdownOptionsArrayObject?.projects">
+                                <div class="checkbox-option"
+                                    *ngFor="let project of dropdownOptionsArrayObject?.projects">
                                     <input type="checkbox" [id]="'project-' + project.id"
                                         [checked]="selectedProjects.includes(project.id)"
                                         (change)="onProjectCheckboxChange($event, project.id)" />
                                     <label [for]="'project-' + project.id">{{ project.name }}</label>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div *ngIf="getValidation('projectAllocation', ['required'])" class="invalid">
                             Project name is required.
@@ -300,4 +311,6 @@
 <app-modal-pop-up [isVisible]="displayModal" [context]="modalContext"
     (modal-event-handler)="HandleModalEvent($event)"></app-modal-pop-up>
 
-<p-multiselect [options]="cities" [(ngModel)]="selectedCities" placeholder="Select Cities" optionLabel="name" display="chip" class="w-full md:w-80" />
+<!-- <p-multiselect [options]="cities" [(ngModel)]="selectedCities" placeholder="Select Cities" optionLabel="name" display="chip" class="w-full md:w-80" /> -->
+
+<!-- <p-multiselect [options]="cities" [(ngModel)]="selectedCities" optionLabel="name" placeholder="Select Cities" [maxSelectedLabels]="3" class="w-full md:w-80" /> -->

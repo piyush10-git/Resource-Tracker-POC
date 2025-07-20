@@ -217,7 +217,7 @@ button:disabled {
     line-height: 1.1rem;
     letter-spacing: 1px;
     color: #1a1a1aaa;
-    text-align:start;
+    text-align: start;
 }
 
 .edit-btn {
@@ -263,6 +263,7 @@ option {
     0% {
         left: -50%;
     }
+
     100% {
         left: 100%;
     }
@@ -280,7 +281,7 @@ option {
 
 /* select[multiple] {
     /* height: auto; */
-    /* min-height: 100px;
+/* min-height: 100px;
     padding: 10px;
     border-radius: 6px;
     border: 1px solid #ccc;
@@ -297,44 +298,44 @@ select[multiple]:focus {
 } */
 
 .dropdown-container {
-  position: relative;
-  width: 100%;
-  user-select: none;
+    position: relative;
+    width: 100%;
+    user-select: none;
 }
 
 .fake-input {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  min-height: 40px;
-  background: #fff;
-  cursor: pointer;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 40px;
+    background: #fff;
+    cursor: pointer;
 }
 
 .dropdown-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 10;
-  background: white;
-  border: 1px solid #ccc;
-  width: 100%;
-  max-height: 200px;
-  overflow-y: auto;
-  border-radius: 4px;
-  margin-top: 4px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    background: white;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 4px;
+    margin-top: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 .checkbox-option {
-  padding: 8px 12px;
-  display: flex;
-  /* justify-content: center; */
-  align-items: center;
-  gap: 8px;
-  /* outline: auto; */
+    padding: 8px 12px;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    gap: 8px;
+    /* outline: auto; */
 }
 
 .checkbox-option:hover {
-  background-color: #f1f1f1;
+    background-color: #f1f1f1;
 }

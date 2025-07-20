@@ -16,10 +16,10 @@ export function ConvertNameToIds(stringIdMap: Map<string, number>, data: string)
         return undefined;
     }
 
-    let output = data.split(',').map((name: string) => {
+    const output = data.split(',').map((name: string) => {
         const trimmedItem = name.trim();
         return stringIdMap.has(trimmedItem) ? stringIdMap.get(trimmedItem) : null;
-    }).filter(id => id !== null).join(',');
+    }).filter(id => id !== null);
 
     console.log(`Input string: ${data}`);
     console.log(`Converted string to IDs: ${output}`);

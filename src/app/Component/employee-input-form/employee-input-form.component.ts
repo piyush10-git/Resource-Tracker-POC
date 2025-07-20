@@ -11,12 +11,13 @@ import { AppStateServiceService } from '../../Services/app-state-service.service
 import { ToastrService } from 'ngx-toastr';
 import { NavigationService } from '../../Services/navigation.service';
 import { LookupServiceService } from '../../Services/lookup-service.service';
-import { MultiSelectModule } from 'primeng/multiselect';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @Component({
   selector: 'app-employee-input-form',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, ModalPopUpComponent, MultiSelectModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, ModalPopUpComponent, NgSelectModule],
   templateUrl: './employee-input-form.component.html',
   styleUrl: './employee-input-form.component.css'
 })

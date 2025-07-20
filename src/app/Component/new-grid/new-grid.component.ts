@@ -238,12 +238,12 @@ export class NewGridComponent {
 
         return {
           resourceName: row[0],
-          designation: ConvertNameToIds(this.dropdownOptionsMapObject['designations'][0], row[1]),
+          designation: this.dropdownOptionsMapObject['designations'][0].get(row[1]),
           reportingTo: row[2],
           billable: row[3].toLowerCase() === 'yes',
           technologySkill: ConvertNameToIds(this.dropdownOptionsMapObject['skills'][0], row[4]),
           projectAllocation: ConvertNameToIds(this.dropdownOptionsMapObject['projects'][0], row[5]),
-          location: ConvertNameToIds(this.dropdownOptionsMapObject['locations'][0], row[6]),
+          location: this.dropdownOptionsMapObject['locations'][0].get(row[6]),
           emailId: row[7],
           cteDoj: row[8],
           remarks: row[9]
