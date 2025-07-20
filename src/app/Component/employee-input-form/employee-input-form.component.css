@@ -277,3 +277,64 @@ option {
     background-color: #61a0ff;
     cursor: not-allowed;
 }
+
+/* select[multiple] {
+    /* height: auto; */
+    /* min-height: 100px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 0.95rem;
+    overflow-y: auto;
+    /* resize: vertical;
+}
+
+select[multiple]:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+} */
+
+.dropdown-container {
+  position: relative;
+  width: 100%;
+  user-select: none;
+}
+
+.fake-input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-height: 40px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  background: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 4px;
+  margin-top: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.checkbox-option {
+  padding: 8px 12px;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 8px;
+  /* outline: auto; */
+}
+
+.checkbox-option:hover {
+  background-color: #f1f1f1;
+}

@@ -68,8 +68,7 @@
 
                     <div class="form-group">
                         <label for="doj">Date Of Joining<span class="required">*</span></label>
-                        <input type="date" id="doj" name="doj" formControlName="cteDoj"
-                            placeholder="DD-MM-YYYY" />
+                        <input type="date" id="doj" name="doj" formControlName="cteDoj" placeholder="DD-MM-YYYY" />
                         <div *ngIf="getValidation('cteDoj', ['required'])" class="invalid">Date of joining is required
                         </div>
 
@@ -77,8 +76,14 @@
 
                     <div class="form-group">
                         <label for="location">Location<span class="required">*</span></label>
-                        <input type="text" id="location" name="location" formControlName="location"
-                            placeholder="Enter Office Location" />
+                        <!-- <input type="text" id="location" name="location" formControlName="location"
+                            placeholder="Enter Office Location" /> -->
+                        <select name="location" id="location" formControlName="location" class="custom-select" value="">
+                            <option value="" disabled hidden>Select Location</option>
+                            <option *ngFor="let location of dropdownOptionsArrayObject?.locations" [value]="location?.id">
+                                {{ location?.name }}
+                            </option>
+                        </select>
                         <div *ngIf="getValidation('location', ['required'])" class="invalid">Location cannot be empty.
                         </div>
 
@@ -105,8 +110,16 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="designation">Designation<span class="required">*</span></label>
-                        <input type="text" id="designation" name="designation" formControlName="designation"
-                            placeholder="Enter Designation" />
+                        <!-- <input type="text" id="designation" name="designation" formControlName="designation"
+                            placeholder="Enter Designation" /> -->
+
+                        <select name="designation" id="designation" formControlName="designation" class="custom-select"
+                            value="">
+                            <option value="" disabled hidden>Select Designation</option>
+                            <option *ngFor="let designation of dropdownOptionsArrayObject?.designations" [value]="designation?.id">
+                                {{ designation?.name }}
+                            </option>
+                        </select>
                         <div *ngIf="getValidation('designation', ['required'])" class="invalid">Please enter the
                             designation
                         </div>
@@ -152,12 +165,12 @@
             <div class="form-section">
                 <!-- <h3>Skills & Project</h3> -->
                 <div class="form-grid">
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="skills">
                             <pre>Technology / Skill</pre><span class="required">*</span>
                         </label>
                         <input type="text" id="skills" name="skills" placeholder="e.g. Angular, Java"
-                            formControlName="technologySkill"/>
+                            formControlName="technologySkill" />
                         <div *ngIf="getValidation('technologySkill', ['required'])" class="invalid">Please specify at
                             least
                             one skill
@@ -167,10 +180,71 @@
 
                     <div class="form-group">
                         <label for="project">Project Allocation<span class="required">*</span></label>
-                        <input type="text" id="project" name="project" formControlName="projectAllocation" placeholder="Enter Project"/>
+                        <input type="text" id="project" name="project" formControlName="projectAllocation"
+                            placeholder="Enter Project" />
                         <div *ngIf="getValidation('projectAllocation', ['required'])" class="invalid">Project name is
                             required.</div>
+                    </div> -->
+                    <!-- <div class="form-group">
+                        <label for="skills">
+                            <pre>Technology / Skill</pre><span class="required">*</span>
+                        </label>
+                        <select id="skills" name="skills" formControlName="technologySkill" class="custom-select"
+                            multiple>
+                            <option *ngFor="let skill of dropdownOptions?.skills" [value]="skill?.id">
+                                {{ skill?.name }}
+                            </option>
+                        </select>
+                        <div *ngIf="getValidation('technologySkill', ['required'])" class="invalid">
+                            Please specify at least one skill or technology.
+                        </div>
+                    </div> -->
+
+                    <div class="form-group">
+                        <label>Technology / Skills<span class="required">*</span></label>
+                        <div class="dropdown-container">
+                            <div class="fake-input" (click)="toggleDropdown()">
+                                {{ selectedSkillsDisplay || 'Select skills' }}
+                            </div>
+
+                            <div class="dropdown-list" *ngIf="skillsDropdownOpen">
+                                <div class="checkbox-option" *ngFor="let skill of dropdownOptionsArrayObject.skills">
+                                    <input type="checkbox" [id]="'skill-' + skill.id"
+                                        [checked]="selectedSkills.includes(skill.id)"
+                                        (change)="onSkillCheckboxChange($event, skill.id)" />
+                                    <label [for]="'skill-' + skill.id">{{ skill.name }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="getValidation('technologySkill', ['required'])" class="invalid">
+                            Please specify at least one skill or technology.
+                        </div>
                     </div>
+
+
+                    <div class="form-group">
+                        <label>Project Allocation<span class="required">*</span></label>
+
+                        <div class="dropdown-container">
+                            <div class="fake-input" (click)="toggleProjectDropdown()">
+                                {{ selectedProjectsDisplay || 'Select projects' }}
+                            </div>
+
+                            <div class="dropdown-list" *ngIf="projectsDropdownOpen">
+                                <div class="checkbox-option" *ngFor="let project of dropdownOptionsArrayObject?.projects">
+                                    <input type="checkbox" [id]="'project-' + project.id"
+                                        [checked]="selectedProjects.includes(project.id)"
+                                        (change)="onProjectCheckboxChange($event, project.id)" />
+                                    <label [for]="'project-' + project.id">{{ project.name }}</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="getValidation('projectAllocation', ['required'])" class="invalid">
+                            Project name is required.
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -190,7 +264,8 @@
                 <!-- <h3>Additional Information</h3> -->
                 <div class="form-group full-width">
                     <label for="remarks">Remarks</label>
-                    <textarea id="remarks" name="remarks" rows="3" formControlName="remarks" placeholder="Add Remarks"></textarea>
+                    <textarea id="remarks" name="remarks" rows="3" formControlName="remarks"
+                        placeholder="Add Remarks"></textarea>
                 </div>
             </div>
         </div>
@@ -224,3 +299,5 @@
 
 <app-modal-pop-up [isVisible]="displayModal" [context]="modalContext"
     (modal-event-handler)="HandleModalEvent($event)"></app-modal-pop-up>
+
+<p-multiselect [options]="cities" [(ngModel)]="selectedCities" placeholder="Select Cities" optionLabel="name" display="chip" class="w-full md:w-80" />

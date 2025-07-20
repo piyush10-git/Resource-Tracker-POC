@@ -64,6 +64,12 @@
     </div> -->
 
 <div class="Kendo-grid-container">
+  <kendo-upload [multiple]="false" [showFileList]="false" [autoUpload]="false" (select)="ExcelImport($event)"
+    [ngStyle]="{ 'height.px': 36, 'padding': '0', 'margin-top.px': 4 }" [class.k-button]="true"
+    [class.k-button-md]="true" [class.k-button-solid]="true" [class.k-button-solid-base]="true"
+    [class.k-upload-button]="true">
+    <!-- <span class="k-button-text">Import Excel</span> -->
+  </kendo-upload>
   <kendo-grid [kendoGridBinding]="gridData" [loading]="loading" [selectable]="{
     mode: 'multiple',
     metaKeyMultiSelect: this.requireSelectOrCtrlKeys
@@ -81,8 +87,28 @@
       <kendo-toolbar-button id="Delete-btn" [text]="GetDeleteTitle()" (click)="OnDeleteClick()"></kendo-toolbar-button>
 
       <kendo-toolbar-spacer></kendo-toolbar-spacer>
-      <!-- <kendo-toolbar-button id="Import-excel-btn" [text]="'Import Excel'"
-        (click)="OnImportExcelClick()"></kendo-toolbar-button> -->
+
+      <ng-template kendoToolBarTemplate>
+        <kendo-upload [multiple]="false" [showFileList]="false" [autoUpload]="false" (select)="ExcelImport($event)"
+          [restrictions]="{ allowedExtensions: ['.xlsx', '.xls'] }"
+          class="k-button k-button-md k-button-solid k-button-solid-base" style="height: 36px;">
+          <span class="k-button-text">Import Excel</span>
+        </kendo-upload>
+      </ng-template>
+
+
+      <!-- <kendo-upload [multiple]="false" [showFileList]="false" [autoUpload]="false" (select)="ExcelImport($event)">
+      </kendo-upload> -->
+      <!-- <kendo-toolbar-button id="Import-excel-btn" [text]="'Import Excel'">
+        <input type="file" (change)="ExcelImport($event)" accept=".xlsx, .xls" />
+      </kendo-toolbar-button> -->
+      <!-- <input type="file" (change)="ExcelImport($event)" accept=".xlsx, .xls" /> -->
+      <!-- <kendo-toolbar-button [text]="'Import Excel'">
+        <kendo-upload [multiple]="false" [showFileList]="false" [autoUpload]="false" (select)="ExcelImport($event)">
+        </kendo-upload>
+      </kendo-toolbar-button> -->
+
+
       <kendo-toolbar-button id="Delete-btn" [text]="'Add Resource'"
         (click)="OnAddResourceClick()"></kendo-toolbar-button>
       <kendo-toolbar-button id="Pdf-btn" [text]="'PDF'" (click)="DownloadMultiSelectedPDF()"></kendo-toolbar-button>

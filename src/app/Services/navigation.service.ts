@@ -7,7 +7,6 @@ import { Location } from '@angular/common';
 })
 export class NavigationService {
   currentTab: string = 'Home';
-  backButtonVisible: boolean = false;
 
   routerToTabMap: any = {
     Dashboard: 'Dashboard',
@@ -31,23 +30,25 @@ export class NavigationService {
   };
 
   constructor(private router: Router, private location: Location) { }
-  
+
   NavigateToTab(currentTab: string) {
     for (let key in this.routerToTabMap) {
       if (currentTab.includes(this.routerToTabMap[key])) {
         this.currentTab = key.toString();
         break;
       }
-    }
-    this.router.navigate([this.routeMap[currentTab]]);
+    }    
+    let routePath = this.currentTab === 'Edit' ? [currentTab] : [this.routeMap[this.currentTab]];
+      this.router.navigate(routePath);
   }
 
   OnBackButtonClick() {
+    // window.history.back();
     this.location.back();
   }
 
   get GetBackButtonVisible(): boolean {
-    this.backButtonVisible = window.history.length > 1;
-    return this.backButtonVisible;
+    // console.log(window.history.length);
+    return window.history.length > 1;
   }
 }

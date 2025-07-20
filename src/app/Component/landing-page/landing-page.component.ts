@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpAPIClientService } from '../../Services/http-api-client.service';
 import { CommonModule } from '@angular/common';
+import { NavigationService } from '../../Services/navigation.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -11,12 +12,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './landing-page.component.css'
 })
 export class LandingPageComponent {
-  routeMap: any = {
-    Dashboard: '/Dashboard',
-    List: '/Resource-Grid',
-    Add: '/Add',
-  }
-  constructor(private router: Router, private httpAPIClient: HttpAPIClientService) { }
+  // routeMap: any = {
+  //   Dashboard: '/Dashboard',
+  //   List: '/Resource-Grid',
+  //   Add: '/Add',
+  // }
+  constructor(private router: Router, private httpAPIClient: HttpAPIClientService, private navigationService: NavigationService) { }
 
   ResourceStatistics: any = {
     resourceCount: null,
@@ -43,6 +44,7 @@ export class LandingPageComponent {
   }
 
   NavigateToTab(currentTab: string) {
-    this.router.navigate([this.routeMap[currentTab]]);
+    // this.router.navigate([this.routeMap[currentTab]]);
+    this.navigationService.NavigateToTab(currentTab);
   }
 }

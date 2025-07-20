@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-import { Resource } from '../../Interfaces/Interfaces';
-import { EmployeeInputFormComponent } from '../employee-input-form/employee-input-form.component';
-import { HttpAPIClientService } from '../../Services/http-api-client.service';
 import { Router, RouterOutlet } from '@angular/router';
-import { Location } from '@angular/common';
 import { NavigationService } from '../../Services/navigation.service';
+import { LookupServiceService } from '../../Services/lookup-service.service';
 
 @Component({
   selector: 'app-resource-tracker',
@@ -47,7 +44,12 @@ export class ResourceTrackerComponent {
     Edit: 'Update the resource’s information including role, project, skills, and other relevant details. Use this section to maintain accurate and up-to-date records.',
   }
 
-  constructor(private router: Router, private location: Location, private navigationService: NavigationService) { }
+  constructor(private router: Router, private navigationService: NavigationService, private lookupService: LookupServiceService) { }
+
+
+  ngOnInit() {
+    this.lookupService.GetDropdownOptions();
+  }
 
   NavigateToTab(currentTab: string) {
     this.navigationService.NavigateToTab(currentTab);
@@ -58,6 +60,8 @@ export class ResourceTrackerComponent {
   }
 
   GetBackButtonStatus(): boolean {
+    // console.log(this.navigationService.GetBackButtonVisible);
+
     return this.navigationService.GetBackButtonVisible;
   }
 

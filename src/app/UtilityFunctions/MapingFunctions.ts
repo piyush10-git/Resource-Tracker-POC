@@ -1,6 +1,11 @@
 import { Resource } from "../Interfaces/Interfaces";
 
-export function ConvertResponseToResource(data: any): Resource {
+
+export function ParseGetAllResourcesResponse(dataList: Array<any>): any[] {
+    return dataList.map((data) => ConvertResponseToResource(data));
+}
+
+export function ConvertResponseToResource(data: any): any {
     return {
         empId: data.empId?.toString() ?? '',
         resourceName: data.resourceName ?? '',
@@ -15,11 +20,6 @@ export function ConvertResponseToResource(data: any): Resource {
         remarks: data.remarks ?? '',
     };
 }
-
-export function ConvertResponseToResourceArray(dataList: Array<any>) {
-    return dataList.map((data) => ConvertResponseToResource(data));
-}
-
 
 export function ConvertResourceToRequest(resource: any): any {
     return {
@@ -36,3 +36,18 @@ export function ConvertResourceToRequest(resource: any): any {
     };
 }
 
+export function ParseGetResourceByIdResponse(data: any): Resource {
+    return {
+        empId: data.empId,
+        resourceName: data.name,
+        designation: data.designation?.id,
+        location: data.location?.id,
+        reportingTo: data.reportingTo,
+        billable: data.billable ? 'Yes' : 'No',
+        technologySkill: data.skills.map((skill: any) => skill.id),
+        projectAllocation: data.projects.map((project: any) => project.id),
+        emailId: data.email,
+        cteDoj: data.cteDoj,
+        remarks: data.remarks ?? null
+    };
+}

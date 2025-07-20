@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-import { Resource } from '../../Interfaces/Interfaces';
 import { HttpAPIClientService } from '../../Services/http-api-client.service';
-import { ConvertResponseToResourceArray } from '../../UtilityFunctions/UtilityFunction';
-import { Router } from '@angular/router';
+import { ParseGetAllResourcesResponse } from '../../UtilityFunctions/MapingFunctions';
 import { ModalPopUpComponent } from '../modal-pop-up/modal-pop-up.component';
-
 import { FormsModule } from "@angular/forms";
 import { ExcelExportData } from "@progress/kendo-angular-excel-export";
 import {
@@ -20,6 +17,13 @@ import { DetailsModalComponent } from '../details-modal/details-modal.component'
 import { DownloadPdf } from '../../UtilityFunctions/ObjectToPDF';
 import { ToastrService } from 'ngx-toastr';
 import { AppStateServiceService } from '../../Services/app-state-service.service';
+import { NavigationService } from '../../Services/navigation.service';
+import { SelectEvent } from '@progress/kendo-angular-upload';
+import * as XLSX from 'xlsx';
+import { UploadModule } from '@progress/kendo-angular-upload';
+import { CommonModule } from '@angular/common';
+import { ConvertNameToIds } from '../../UtilityFunctions/ConvertStringsToIds';
+import { LookupServiceService } from '../../Services/lookup-service.service';
 
 @Component({
   selector: 'app-new-grid',
@@ -32,7 +36,8 @@ import { AppStateServiceService } from '../../Services/app-state-service.service
     KENDO_LABELS,
     KENDO_INPUTS,
     ModalPopUpComponent,
-    DetailsModalComponent],
+    DetailsModalComponent,
+    UploadModule, CommonModule],
   templateUrl: './new-grid.component.html',
   styleUrl: './new-grid.component.css'
 })
@@ -48,10 +53,10 @@ export class NewGridComponent {
     detailsModalVisible: false,
   };
 
-  detailsResource!: Resource;
+  detailsResource!: any;
 
-  gridData: Array<Resource> = [];
-  constructor(private httpAPIClientService: HttpAPIClientService, private router: Router, private toastr: ToastrService, private appStateService: AppStateServiceService) { }
+  gridData: any[] = [];
+  constructor(private httpAPIClientService: HttpAPIClientService, private toastr: ToastrService, private appStateService: AppStateServiceService, private navogationService: NavigationService, private lookupService: LookupServiceService) { }
 
   deleteModalContent!: string;
 
@@ -60,22 +65,29 @@ export class NewGridComponent {
     this.httpAPIClientService.GetResources().subscribe((response: any) => {
       console.log(response);
       if (response?.success) {
-        this.gridData = ConvertResponseToResourceArray(response?.data);
+        this.gridData = ParseGetAllResourcesResponse(response?.data);
         console.log(this.gridData);
         this.loading = false;
         // this.gridData = (ConvertResponseToResourceresponse.data as Array<Resource>);
       }
     });
   }
+  dropdownOptionsMapObject: any = {};
 
   ngOnInit() {
     this.selectedKeys = this.appStateService.GetData('selectedKeys') || [];
+    this.lookupService.dropdownOptions$.subscribe((data: { dropdownOptionsArray: any, optionsMap: any }) => {
+      if (data) {
+        this.dropdownOptionsMapObject = data.optionsMap;
+      }
+    });
     this.GetAllResourcesData();
   }
 
   EditResource(event: any, empId: number) {
     event.stopPropagation();
-    this.router.navigate([`/Edit/${empId}`]);
+    // this.router.navigate([`/Edit/${empId}`]);
+    this.navogationService.NavigateToTab(`/Edit/${empId}`);
   }
 
   ShowDetail(event: any, resource: any) {
@@ -91,7 +103,7 @@ export class NewGridComponent {
   }
 
   DownloadMultiSelectedPDF() {
-    if(this.selectedKeys.length == 0) {
+    if (this.selectedKeys.length == 0) {
       this.toastr.warning('Please Select Resources', 'PDF');
     }
     const data = this.gridData.filter((rowData: any) => this.selectedKeys.includes(rowData?.empId));
@@ -123,7 +135,7 @@ export class NewGridComponent {
     this.modalState.detailsModalVisible = false;
   }
 
-  HandleModalEvent(modalResponse: {caller: string, value: boolean}) {
+  HandleModalEvent(modalResponse: { caller: string, value: boolean }) {
     if (modalResponse.value) {
       this.httpAPIClientService.DeleteMultipleResource(this.selectedKeys).subscribe((response: any) => {
         console.log('Deleted successfuly');
@@ -169,7 +181,8 @@ export class NewGridComponent {
   }
 
   OnAddResourceClick() {
-    this.router.navigate(['/Add']);
+    // this.router.navigate(['/Add']);
+    this.navogationService.NavigateToTab('/Add');
   }
 
   GetDeleteTitle() {
@@ -177,36 +190,115 @@ export class NewGridComponent {
     return this.selectedKeys.length > 1 ? "Delete Multiple" : "Delete";
   }
 
+  headers = ['empId', 'resourceName', 'designation', 'projectAllocation', 'technologySkill', 'location', 'emailId'];
 
-  // // Import excel file
-  // OnImportExcelClick() {
-  //   // we can use a file input to select the excel file and then process it.
-  //   // For now, we will just show a message that the functionality is not implemented yet.
-  //   // You can use libraries like xlsx or SheetJS to read excel files in Angular.
-  //   // For example, you can use the following code to read an excel file:
-  //   const fileInput = document.createElement('input');
-  //   fileInput.type = 'file';
-  //   fileInput.accept = '.xlsx, .xls';
-  //   fileInput.onchange = (event: any) => {
-  //     const file = event.target.files[0];
-  //     if (file) {
-  //       const reader = new FileReader();
-  //       reader.onload = (e: any) => {
-  //         const data = e.target.result;
-  //         // Use a library like xlsx to parse the data
-  //         const workbook =  .read(data, { type: 'binary' });
-  //         const sheetName = workbook.SheetNames[0];
-  //         const sheet = workbook.Sheets[sheetName];
-  //         const jsonData = XLSX.utils.sheet_to_json(sheet);
-  //         // Process the jsonData as needed
-  //       };
-  //       reader.readAsBinaryString(file);
-  //     }
-  //   };
-  //   fileInput.click();
+  ExcelImport(event: SelectEvent): void {
+    const file = event.files[0].rawFile;
+    const reader = new FileReader();
 
-  //   // Implement the logic to import excel file
+    if (!file) {
+      this.toastr.error('No file selected', 'Import Error');
+      return;
+    }
 
-  //   this.toastr.info('Import Excel functionality is not implemented yet', 'Info');
-  // }
+    const isCSV = file.name.toLowerCase().endsWith('.csv');
+
+    reader.onload = (e: any) => {
+      const content = e.target.result;
+      const data: any[] = [];
+
+      const parseCSVLine = (line: string): string[] => {
+        const result: string[] = [];
+        let current = '';
+        let insideQuotes = false;
+
+        for (let i = 0; i < line.length; i++) {
+          const char = line[i];
+          const nextChar = line[i + 1];
+
+          if (char === '"' && insideQuotes && nextChar === '"') {
+            current += '"';
+            i++; // skip the next quote
+          } else if (char === '"') {
+            insideQuotes = !insideQuotes;
+          } else if (char === ',' && !insideQuotes) {
+            result.push(current.trim());
+            current = '';
+          } else {
+            current += char;
+          }
+        }
+
+        result.push(current.trim());
+        return result;
+      };
+
+      const mapRowToObject = (row: string[]): any => {
+        if (row.length < 10) return null;
+
+        return {
+          resourceName: row[0],
+          designation: ConvertNameToIds(this.dropdownOptionsMapObject['designations'][0], row[1]),
+          reportingTo: row[2],
+          billable: row[3].toLowerCase() === 'yes',
+          technologySkill: ConvertNameToIds(this.dropdownOptionsMapObject['skills'][0], row[4]),
+          projectAllocation: ConvertNameToIds(this.dropdownOptionsMapObject['projects'][0], row[5]),
+          location: ConvertNameToIds(this.dropdownOptionsMapObject['locations'][0], row[6]),
+          emailId: row[7],
+          cteDoj: row[8],
+          remarks: row[9]
+        };
+      };
+
+      if (isCSV) {
+        const lines = content.split(/\r?\n/).filter((l: any) => l.trim() !== '');
+        const headers = parseCSVLine(lines[0]);
+
+        for (let i = 1; i < lines.length; i++) {
+          const row = parseCSVLine(lines[i]);
+          if (row.length === headers.length) {
+            const mapped = mapRowToObject(row);
+            if (mapped) data.push(mapped);
+          }
+        }
+
+        finalizeImport(data);
+      } else {
+        const wb = XLSX.read(content, { type: 'binary' });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const raw: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1 });
+
+        for (let i = 1; i < raw.length; i++) {
+          const row = raw[i];
+          const mapped = mapRowToObject(row);
+          if (mapped) data.push(mapped);
+        }
+
+        finalizeImport(data);
+      }
+    };
+
+    const finalizeImport = (data: any[]) => {
+      console.log('Imported structured data:', data);
+      this.httpAPIClientService.ImportExcelData(data).subscribe((response: any) => {
+        if (response?.success) {
+          this.toastr.success('Data imported successfully', 'Import');
+          this.GetAllResourcesData();
+        } else {
+          this.toastr.error('Failed to import data', 'Import Error');
+        }
+      }, (error) => {
+        console.error('Import error:', error);
+        this.toastr.error('Failed to import data', 'Import Error');
+      })
+    };
+
+    if (isCSV) {
+      reader.readAsText(file);
+    } else {
+      reader.readAsBinaryString(file);
+    }
+  }
+
+
 }

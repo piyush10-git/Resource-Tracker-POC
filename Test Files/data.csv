@@ -1,0 +1,6 @@
+Name,Designation,Reporting Manager,Active,Skill,Project,Location,Email,Joining Date,Remarks
+Alice Johnson,Senior Developer,Michael,Yes,"React,Node.js","Project Alpha,Project Gamma",Bangalore,alice.johnson@example.com,2021-11-30,Reliable
+Bob Lee,Frontend Developer,David,Yes,"React,Node.js","Project Alpha,Project Theta",Bangalore,bob.lee@example.com,2023-01-12,Needs improvement
+Jane Smith,Frontend Developer,Emily,Yes,"React,Angular","Project Alpha,Project Beta",Bangalore,jane.smith@example.com,2023-02-19,Excellent
+John Doe,Senior Developer,Michael,Yes,"React,Node.js","Project Alpha",Bangalore,john.doe@example.com,2022-12-03,On probation
+Chris Evans,Frontend Developer,Sarah,Yes,"React,Angular","Project Alpha,Project Beta",Bangalore,chris.evans@example.com,2020-04-17,Needs improvement

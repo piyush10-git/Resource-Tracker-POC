@@ -11,32 +11,37 @@ export class HttpAPIClientService {
   constructor(private httpClient: HttpClient) { }
 
   GetResources() {
-    const endpointURI = this.serverURI;
+    const endpointURI = this.serverURI + '/get-all-resources';
     return this.httpClient.get(endpointURI);
   }
 
   GetResourceById(id: number) {
-    const endpointURI = this.serverURI + `/${id}`;
+    const endpointURI = this.serverURI + `/get-resource-id/${id}`;
     return this.httpClient.get(endpointURI);
   }
 
   GetResourceStatistics() {
-    const endpointURI = this.serverURI + '/statistics';
+    const endpointURI = this.serverURI + '/get-resource-statistics';
     return this.httpClient.get(endpointURI);
   }
 
   CreateResource(data: any) {
-    const endpointURI = this.serverURI;
+    const endpointURI = this.serverURI + '/create-new-resource';
+    return this.httpClient.post(endpointURI, data);
+  }
+
+  ImportExcelData(data: any) {
+    const endpointURI = this.serverURI + '/import-excel-data';
     return this.httpClient.post(endpointURI, data);
   }
 
   UpdateResource(data: any) {
-    const endpointURI = this.serverURI;
+    const endpointURI = this.serverURI + '/update-resource';
     return this.httpClient.put(endpointURI, data);
   }
 
   DeleteResource(id: number) {
-    const endpointURI = this.serverURI + `/${id}`;
+    const endpointURI = this.serverURI + `/delete-resource/${id}`;
     return this.httpClient.delete(endpointURI);
   }
 
@@ -46,12 +51,17 @@ export class HttpAPIClientService {
       params = params.append('EmpIds', id.toString());
     });
 
-    const endpointURI = this.serverURI + `/Delete-Multiple`;
+    const endpointURI = this.serverURI + `/delete-multiple-resources`;
     return this.httpClient.delete(endpointURI, { params });
   }
 
   CheckEmailExists(email: string) {
     const endpointURI = this.serverURI + `/check-email-exist?emailId=${email}`;
+    return this.httpClient.get(endpointURI);
+  }
+
+  GetDropdownOptions() {
+    const endpointURI = this.serverURI + '/dropdown-options';
     return this.httpClient.get(endpointURI);
   }
 }
