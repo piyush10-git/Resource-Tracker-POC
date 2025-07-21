@@ -84,8 +84,8 @@
       <kendo-toolbar-separator></kendo-toolbar-separator>
       <kendo-toolbar-button kendoGridColumnChooserTool></kendo-toolbar-button>
 
-      <kendo-toolbar-button id="Delete-btn" [text]="GetDeleteTitle()" (click)="OnDeleteClick()"></kendo-toolbar-button>
-
+      <kendo-toolbar-button id="Delete-btn" [text]="GetDeleteTitle()" [disabled]="selectedKeys.length < 2" (click)="OnDeleteClick()"></kendo-toolbar-button>
+      <kendo-toolbar-button id="Edit-btn" [text]="'Bulk Edit'" [disabled]="selectedKeys.length < 2" (click)="OnBulkEditClick()"></kendo-toolbar-button>
       <kendo-toolbar-spacer></kendo-toolbar-spacer>
 
       <ng-template kendoToolBarTemplate>
@@ -154,6 +154,7 @@
     </kendo-grid-pdf>
     <kendo-grid-excel fileName="Resources.xlsx" [fetchData]="allData.bind(this)"></kendo-grid-excel>
   </kendo-grid>
+  <app-bulk-edit-comp (bulkEditResponseEmmiter)="HandleBulkEditResponse($event)" [isVisible]="isBulkEditVisible" [selectedResources]="selectedKeys"></app-bulk-edit-comp>
 </div>
 
 <app-modal-pop-up [isVisible]="modalState.deleteModalVisible" [context]="deleteModalContext"

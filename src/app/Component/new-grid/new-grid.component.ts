@@ -24,6 +24,7 @@ import { UploadModule } from '@progress/kendo-angular-upload';
 import { CommonModule } from '@angular/common';
 import { ConvertNameToIds } from '../../UtilityFunctions/ConvertStringsToIds';
 import { LookupServiceService } from '../../Services/lookup-service.service';
+import { BulkEditCompComponent } from '../bulk-edit-comp/bulk-edit-comp.component';
 
 @Component({
   selector: 'app-new-grid',
@@ -37,7 +38,7 @@ import { LookupServiceService } from '../../Services/lookup-service.service';
     KENDO_INPUTS,
     ModalPopUpComponent,
     DetailsModalComponent,
-    UploadModule, CommonModule],
+    UploadModule, CommonModule, BulkEditCompComponent],
   templateUrl: './new-grid.component.html',
   styleUrl: './new-grid.component.css'
 })
@@ -53,12 +54,35 @@ export class NewGridComponent {
     detailsModalVisible: false,
   };
 
+  isBulkEditVisible: boolean = false;
+
   detailsResource!: any;
 
   gridData: any[] = [];
   constructor(private httpAPIClientService: HttpAPIClientService, private toastr: ToastrService, private appStateService: AppStateServiceService, private navogationService: NavigationService, private lookupService: LookupServiceService) { }
 
   deleteModalContent!: string;
+
+  OnBulkEditClick() {
+    if (this.selectedKeys.length < 2) { 
+      this.toastr.warning('Please Select Resources', 'Bulk Edit');
+      return;
+    }
+    this.isBulkEditVisible = !this.isBulkEditVisible;
+  }
+
+  HandleBulkEditResponse(event: any) {
+    if (event.success) {
+      this.toastr.success(event.message, 'Bulk Edit');
+      this.isBulkEditVisible = false;
+      this.GetAllResourcesData();
+      this.selectedKeys = [];
+      this.appStateService.SetData('selectedKeys', []);
+    } else {
+      this.toastr.error(event.message, 'Bulk Edit');
+      this.isBulkEditVisible = false;
+    }
+  }
 
   GetAllResourcesData() {
     this.loading = true;

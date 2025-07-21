@@ -1,0 +1,277 @@
+<!-- smart-edit-bar.component.html
+<div *ngIf="isVisible" class="smart-edit-bar">
+  <div class="edit-header">
+    🛠️ Editing {{ selectedResources.length }} selected resources
+    <button class="btn-cancel" (click)="isVisible = false">✖</button>
+  </div>
+
+  <form [formGroup]="bulkEditForm" (ngSubmit)="applyBulkEdit()">
+    <table class="bulk-edit-table">
+      <tbody>
+
+        <tr>
+          <td>
+            <label>
+              <input type="checkbox" (change)="fieldsEnabled.designation=!fieldsEnabled.designation" name="toggle-designation" />
+              Designation
+            </label><br />
+            <select
+            [value]="null"
+              formControlName="designation"
+              class="custom-select"
+              [disabled]="!fieldsEnabled.designation"
+            >
+              <option [value]="null" disabled hidden>Select Designation</option>
+              <option *ngFor="let d of dropdownOptionsArrayObject?.designations" [value]="d?.id">
+                {{ d?.name }}
+              </option>
+            </select>
+          </td>
+
+          <td>
+            <label>
+              <input type="checkbox" (change)="fieldsEnabled.location!=fieldsEnabled.location" name="toggle-location" />
+              Location
+            </label><br />
+            <select
+              formControlName="location"
+              class="custom-select"
+              [disabled]="!fieldsEnabled.location"
+              [value]="null"
+            >
+              <option [value]="null" disabled hidden>Select Location</option>
+              <option *ngFor="let l of dropdownOptionsArrayObject?.locations" [value]="l?.id">
+                {{ l?.name }}
+              </option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>
+              <input type="checkbox" (change)="fieldsEnabled.skills!=fieldsEnabled.skills" name="toggle-skills" />
+              Skills
+            </label><br />
+            <ng-select
+              formControlName="skills"
+              [items]="dropdownOptionsArrayObject?.skills"
+              bindLabel="name"
+              bindValue="id"
+              [multiple]="true"
+              [searchable]="true"
+              [disabled]="!fieldsEnabled.skills"
+              [closeOnSelect]="false"
+              [clearable]="true"
+            >
+            </ng-select>
+          </td>
+
+          <td>
+            <label>
+              <input type="checkbox" (change)="fieldsEnabled.project!=fieldsEnabled.project" name="toggle-project" />
+              Project Allocation
+            </label><br />
+            <ng-select
+              formControlName="project"
+              [items]="dropdownOptionsArrayObject?.projects"
+              bindLabel="name"
+              bindValue="id"
+              [multiple]="true"
+              [searchable]="true"
+              [disabled]="!fieldsEnabled.project"
+              [closeOnSelect]="false"
+              [clearable]="true"
+            >
+            </ng-select>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>
+              <input type="checkbox" (change)="fieldsEnabled.reportingTo!=fieldsEnabled.reportingTo" name="toggle-reportingTo" />
+              Reporting To
+            </label><br />
+            <input
+              type="text"
+              formControlName="reportingTo"
+              [disabled]="!fieldsEnabled.reportingTo"
+              placeholder="Enter Reporting Manager"
+              class="custom-input"
+            />
+          </td>
+
+          <td>
+            <label>
+              <input type="checkbox" (change)="fieldsEnabled.billable!=fieldsEnabled.billable" name="toggle-billable" />
+              Billable
+            </label><br />
+            <select
+              formControlName="billable"
+              class="custom-select"
+              [disabled]="!fieldsEnabled.billable"
+            >
+              <option value="" disabled hidden>Select</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label>
+              <input type="checkbox" (change)="fieldsEnabled.ctedoj!=fieldsEnabled.ctedoj" name="toggle-ctedoj" />
+              Date of Joining
+            </label><br />
+            <input
+              type="date"
+              formControlName="ctedoj"
+              class="custom-input"
+              [disabled]="!fieldsEnabled.ctedoj"
+            />
+          </td>
+
+          <td>
+            <label>
+              <input type="checkbox" (change)="fieldsEnabled.remarks!=fieldsEnabled.remarks" name="toggle-remarks" />
+              Remarks
+            </label><br />
+            <textarea
+              formControlName="remarks"
+              rows="2"
+              class="custom-textarea"
+              [disabled]="!fieldsEnabled.remarks"
+              placeholder="Add remarks to all selected"
+            ></textarea>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div class="edit-actions">
+      <button type="submit" class="btn-apply">💾 Apply Bulk Changes</button>
+      <button type="button" class="btn-cancel" (click)="isVisible = false">Cancel</button>
+    </div>
+  </form>
+</div> -->
+
+
+
+<div *ngIf="isVisible" class="smart-edit-bar">
+    <div class="edit-header">
+        Editing {{ selectedResources.length }} selected resources
+        <button class="btn-cancel" (click)="isVisible = false">✖</button>
+    </div>
+
+    <form [formGroup]="bulkEditForm" (ngSubmit)="applyBulkEdit()">
+        <table class="bulk-edit-table">
+            <tbody>
+                <tr>
+                    <td>
+                        <label>
+                            <!-- <input type="checkbox" (change)="fieldsEnabled.designation=!fieldsEnabled.designation" name="toggle-designation" /> -->
+                            Designation
+                        </label><br />
+                        <select [value]="null" formControlName="designation" class="custom-select">
+                            <option [value]="null" disabled hidden>Select Designation</option>
+                            <option *ngFor="let d of dropdownOptionsArrayObject?.designations" [value]="d?.id">
+                                {{ d?.name }}
+                            </option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <label>
+                            <!-- <input type="checkbox" (change)="fieldsEnabled.location!=fieldsEnabled.location" name="toggle-location" /> -->
+                            Location
+                        </label><br />
+                        <select formControlName="location" class="custom-select" [disabled]="!fieldsEnabled.location"
+                            [value]="null">
+                            <option [value]="null" disabled hidden>Select Location</option>
+                            <option *ngFor="let l of dropdownOptionsArrayObject?.locations" [value]="l?.id">
+                                {{ l?.name }}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>
+                            <!-- <input type="checkbox" (change)="fieldsEnabled.skills!=fieldsEnabled.skills" name="toggle-skills" /> -->
+                            Skills
+                        </label><br />
+                        <ng-select formControlName="skills" [items]="dropdownOptionsArrayObject?.skills"
+                            bindLabel="name" bindValue="id" [multiple]="true" [searchable]="true"
+                            [closeOnSelect]="false" [clearable]="true">
+                        </ng-select>
+                    </td>
+
+                    <td>
+                        <label>
+                            <!-- <input type="checkbox" (change)="fieldsEnabled.project!=fieldsEnabled.project" name="toggle-project" /> -->
+                            Project Allocation
+                        </label><br />
+                        <ng-select formControlName="project" [items]="dropdownOptionsArrayObject?.projects"
+                            bindLabel="name" bindValue="id" [multiple]="true" [searchable]="true"
+                            [closeOnSelect]="false" [clearable]="true">
+                        </ng-select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>
+                            <!-- <input type="checkbox" (change)="fieldsEnabled.reportingTo!=fieldsEnabled.reportingTo" name="toggle-reportingTo" /> -->
+                            Reporting To
+                        </label><br />
+                        <input type="text" formControlName="reportingTo" placeholder="Enter Reporting Manager"
+                            class="custom-input" />
+                    </td>
+
+                    <td>
+                        <label>
+                            <!-- <input type="checkbox" (change)="fieldsEnabled.billable!=fieldsEnabled.billable" name="toggle-billable" /> -->
+                            Billable
+                        </label><br />
+                        <select formControlName="billable" class="custom-select">
+                            <option value="" disabled hidden>Select</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>
+                            <!-- <input type="checkbox" (change)="fieldsEnabled.ctedoj!=fieldsEnabled.ctedoj" name="toggle-ctedoj" /> -->
+                            Date of Joining
+                        </label><br />
+                        <input type="date" formControlName="ctedoj" class="custom-input" />
+                    </td>
+
+                    <!-- Remarks -->
+                    <td>
+                        <label>
+                            <!-- <input type="checkbox" (change)="fieldsEnabled.remarks!=fieldsEnabled.remarks" name="toggle-remarks" /> -->
+                            Remarks
+                        </label><br />
+                        <textarea formControlName="remarks" rows="2" class="custom-textarea"
+                            placeholder="Add remarks to all selected"></textarea>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <!-- Actions -->
+        <div class="edit-actions">
+            <button type="submit" class="btn-apply" (click)="applyBulkEdit()" >Apply Changes</button>
+            <button type="button" class="btn-cancel" (click)="isVisible = false">Cancel</button>
+        </div>
+    </form>
+</div>

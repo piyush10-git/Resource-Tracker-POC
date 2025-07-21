@@ -56,19 +56,19 @@ export class EmployeeInputFormComponent {
   // })
 
   employeeForm: FormGroup = new FormGroup({
-    resourceName: new FormControl('', [Validators.required]),
-    emailId: new FormControl('', [Validators.required, Validators.email]),
-    cteDoj: new FormControl('', [Validators.required]),
+    resourceName: new FormControl<string>('', [Validators.required]),
+    emailId: new FormControl<string>('', [Validators.required, Validators.email]),
+    cteDoj: new FormControl<string>('', [Validators.required]),
     location: new FormControl<number | null>(null, [Validators.required]),
 
     designation: new FormControl<number | null>(null, [Validators.required]),
-    reportingTo: new FormControl('', [Validators.required]),
-    billable: new FormControl('', [Validators.required]),
+    reportingTo: new FormControl<string>('', [Validators.required]),
+    billable: new FormControl<string | null>(null, [Validators.required]),
 
     technologySkill: new FormControl<number[]>([], [Validators.required]),
     projectAllocation: new FormControl<number[]>([], Validators.required),
 
-    remarks: new FormControl(''),
+    remarks: new FormControl<string>(''),
   })
 
   dropdownOptionsArrayObject: any;

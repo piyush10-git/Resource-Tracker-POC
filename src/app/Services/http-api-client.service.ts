@@ -64,4 +64,10 @@ export class HttpAPIClientService {
     const endpointURI = this.serverURI + '/dropdown-options';
     return this.httpClient.get(endpointURI);
   }
+
+  BulkEditResources(data: any) {
+    const endpointURI = this.serverURI + '/bulk-edit';
+    return this.httpClient.put(endpointURI, data);
+  }
+
 }

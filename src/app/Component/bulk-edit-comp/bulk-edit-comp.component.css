@@ -1,0 +1,123 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* font-family: Arial, sans-serif; */
+}
+
+.smart-edit-bar {
+  background-color: #fdfdfd;
+  /* border: 1px solid #ccc; */
+  padding: 20px;
+  border-radius: 6px;
+  margin-top: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.smart-edit-bar .edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.smart-edit-bar .edit-header .btn-cancel {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s ease;
+}
+
+.smart-edit-bar .edit-header .btn-cancel:hover {
+  color: #e00;
+}
+
+.smart-edit-bar .bulk-edit-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.smart-edit-bar .bulk-edit-table td {
+  padding: 12px 16px;
+  vertical-align: top;
+  width: 50%;
+}
+
+.smart-edit-bar .form-group label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6px;
+  color: #222;
+}
+
+
+.smart-edit-bar .form-group .custom-select,
+.smart-edit-bar .form-group .custom-input,
+.smart-edit-bar .form-group .custom-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.smart-edit-bar .form-group .custom-textarea {
+  resize: vertical;
+}
+
+.smart-edit-bar .edit-actions {
+  margin-top: 20px;
+  display: flex;
+    justify-content: flex-end;
+  gap: 10px;
+}
+
+.smart-edit-bar .edit-actions button {
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.smart-edit-bar .edit-actions .btn-apply {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.smart-edit-bar .edit-actions .btn-secondary {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.smart-edit-bar .edit-actions .btn-cancel {
+  background-color: #fff0f0;
+  color: #c00;
+}
+
+/* Inputs & Textareas */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  background-color: #fff;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
