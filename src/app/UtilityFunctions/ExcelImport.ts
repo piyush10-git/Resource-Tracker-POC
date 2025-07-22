@@ -1,31 +1,12 @@
-import * as XLSX from 'xlsx';
+export function ExcelDateToJSDate(serial: number): string {
+  const utc_days = Math.floor(serial - 25569); // Excel epoch starts at 1900-01-01
+  const utc_value = utc_days * 86400; // seconds in a day
+  const date_info = new Date(utc_value * 1000); // milliseconds
 
-export function onFileChange(event: any): any[] | undefined {
-    let data: any[] = [];
-    const target: DataTransfer = <DataTransfer>(event.target);
+  // Format to YYYY-MM-DD
+  const year = date_info.getUTCFullYear();
+  const month = String(date_info.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(date_info.getUTCDate()).padStart(2, '0');
 
-    if (target.files.length !== 1) {
-      console.error('Cannot use multiple files');
-      return;
-    }
-
-    const file: File = target.files[0];
-    const reader: FileReader = new FileReader();
-
-    reader.onload = (e: any) => {
-      const bstr: string = e.target.result;
-      const workbook: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
-
-      // Assume you want the first sheet
-      const sheetName: string = workbook.SheetNames[0];
-      const worksheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
-
-      // Convert to array of objects
-      data = XLSX.utils.sheet_to_json(worksheet);
-      console.log(data);
-    };
-
-    reader.readAsBinaryString(file);
-
-    return data;
-  }
+  return `${year}-${month}-${day}`;
+}

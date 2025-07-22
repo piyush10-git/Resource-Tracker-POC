@@ -9,9 +9,10 @@
   background-color: #fdfdfd;
   /* border: 1px solid #ccc; */
   padding: 20px;
-  border-radius: 6px;
+  border-top: solid 1px #545454;
+  /* border-radius: 6px; */
   margin-top: 20px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
 }
 
 .smart-edit-bar .edit-header {
@@ -120,4 +121,18 @@ textarea:focus {
   outline: none;
   border-color: #0d6efd;
   box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+input,
+select,
+textarea,
+.ng-select {
+    margin-top: 5px;
+}
+
+label {
+    font-weight: 600;
+    /* display: block; */
+    margin-bottom: 6px;
+    color: #545454;
 }

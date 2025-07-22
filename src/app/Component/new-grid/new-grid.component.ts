@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
 import { ConvertNameToIds } from '../../UtilityFunctions/ConvertStringsToIds';
 import { LookupServiceService } from '../../Services/lookup-service.service';
 import { BulkEditCompComponent } from '../bulk-edit-comp/bulk-edit-comp.component';
+import { ExcelDateToJSDate } from '../../UtilityFunctions/ExcelImport';
 
 @Component({
   selector: 'app-new-grid',
@@ -198,7 +199,7 @@ export class NewGridComponent {
       }
     })
 
-    console.log(this.selectedKeys);
+    // console.log(this.selectedKeys);
     // Update the app state service with the selected keys
     this.appStateService.SetData('selectedKeys', this.selectedKeys);
     // console.log("Selected Rows Data:", event.selectedRows.map((row: any) => row.dataItem));
@@ -294,7 +295,11 @@ export class NewGridComponent {
 
         for (let i = 1; i < raw.length; i++) {
           const row = raw[i];
-          const mapped = mapRowToObject(row);
+          const mapped: any = mapRowToObject(row);
+          // console.log('mapped',mapped);
+          mapped.cteDoj = ExcelDateToJSDate(mapped.cteDoj);
+          // console.log ('fixed',mapped);
+          
           if (mapped) data.push(mapped);
         }
 

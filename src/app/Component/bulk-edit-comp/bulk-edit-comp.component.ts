@@ -82,8 +82,8 @@ export class BulkEditCompComponent {
         LocationId: formValues.location,
         SkillIds: formValues.skills,
         ProjectIds: formValues.project,
-        ReportingTo: formValues.reportingTo,
-        billBillableable: formValues.billable,
+        ReportingTo: formValues.reportingTo !== '' ? formValues.reportingTo: null,
+        billable: formValues.billable == 'Yes',
         CteDoj: formValues.ctedoj !== '' ? formValues.ctedoj : null,
         Remarks: formValues.ctedoj !== '' ? formValues.remarks : null,
       }
