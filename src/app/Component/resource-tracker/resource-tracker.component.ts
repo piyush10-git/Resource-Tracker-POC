@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { NavigationService } from '../../Services/navigation.service';
 import { LookupServiceService } from '../../Services/lookup-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-resource-tracker',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './resource-tracker.component.html',
   styleUrl: './resource-tracker.component.css'
 })
