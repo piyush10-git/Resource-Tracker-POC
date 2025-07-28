@@ -1,0 +1,255 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    width: 500px;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border-bottom: 1px solid #ddd; */
+    /* padding-bottom: 12px; */
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.modal-body {
+    /* padding-top: 16px; */
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 16px;
+    row-gap: 12px;
+}
+
+.label {
+    font-weight: 600;
+    color: #333;
+    text-align: right;
+    padding-right: 8px;
+}
+
+.value {
+    color: #444;
+}
+
+/* .billable {
+  color: green;
+  font-weight: 600;
+}
+
+.non-billable {
+  color: red;
+  font-weight: 600;
+} */
+
+.modal-footer {
+    text-align: right;
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.primary-btn {
+    margin: 0px 5px;
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-weight: 400;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    height: 40px;
+}
+
+.primary-btn:hover {
+    background-color: rgb(0, 0, 219);
+}
+
+
+
+.upload-label {
+    font-weight: 400;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    margin-top: 2px;
+    display: block;
+    color: #9e9e9e;
+}
+
+.secondary-btn {
+    margin: 0px 5px;
+    background-color: rgb(255, 255, 255);
+    color: #1a1a1a;
+    border: solid 1px rgb(183, 183, 183);
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    height: 40px;
+}
+
+.secondary-btn:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+.file-info {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.preview-table {
+    margin-top: 12px;
+    max-height: 300px;
+    overflow: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.preview-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.preview-table th,
+.preview-table td {
+    padding: 8px;
+    border: 1px solid #eee;
+    text-align: left;
+}
+
+.preview-table thead {
+    background-color: #f9f9f9;
+    font-weight: 600;
+}
+
+.validation-error {
+    background: #fff3cd;
+    color: #856404;
+    padding: 10px 12px;
+    margin-top: 12px;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.link-btn {
+    background: none;
+    border: none;
+    color: #0053ba;
+    cursor: pointer;
+    margin-left: 8px;
+    font-size: 0.9rem;
+    text-decoration: underline;
+}
+
+
+progress {
+    height: 5px;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    color: blue;
+    background-color: blue;
+}
+
+.file-list {
+    display: flex;
+    padding: 10px 0px;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 10px;
+}
+
+.file-item {
+    border: solid 1px #b5b5b5;
+    border-radius: 6px;
+    padding: 6px;
+}
+.inner-container {
+    padding: 3px 7px;
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+    gap: 10px;
+}
+
+.material-symbols-outlined.file-icon {
+    font-size: 1.75rem;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-info-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    gap: 4px;
+}
+.file-name {
+
+}
+
+h4 {
+    font-weight: 400;
+}
+
+.remove-btn {
+    /* outline: auto; */
+    background-color: white;
+    cursor: pointer;
+}
+
+.remove-btn.material-symbols-outlined {
+    color: #666;
+} 

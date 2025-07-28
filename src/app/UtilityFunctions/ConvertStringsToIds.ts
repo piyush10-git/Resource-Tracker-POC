@@ -21,8 +21,8 @@ export function ConvertNameToIds(stringIdMap: Map<string, number>, data: string)
         return stringIdMap.has(trimmedItem) ? stringIdMap.get(trimmedItem) : null;
     }).filter(id => id !== null);
 
-    console.log(`Input string: ${data}`);
-    console.log(`Converted string to IDs: ${output}`);
+    // console.log(`Input string: ${data}`);
+    // console.log(`Converted string to IDs: ${output}`);
 
     return output ? output : undefined;
 }
@@ -37,8 +37,8 @@ export function ConvertIdsToName(stringIdMap: Map<string, number>, data: string)
         return stringIdMap.has(trimmedItem) ? stringIdMap.get(trimmedItem) : null;
     }).filter(name => name !== null).join(',');
 
-    console.log(`Input string: ${data}`);
-    console.log(`Converted string to IDs: ${output}`);
+    // console.log(`Input string: ${data}`);
+    // console.log(`Converted string to IDs: ${output}`);
 
     return output ? output : undefined;
 }

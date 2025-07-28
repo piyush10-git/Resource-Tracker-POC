@@ -303,23 +303,23 @@ button.toast-close-button {
   }
 }
 
-.ng-select-container{
-    padding: 10px 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    transition: all 0.3s ease;
-    font-size: 0.95rem;
-    background-color: #fff;
+.ng-select-container {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  background-color: #fff;
 }
 
 .ng-select-container.ng-has-value {
-    padding: 5px 12px;
+  padding: 5px 12px;
 }
 
 .ng-select-container:focus {
-    outline: none;
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
 }
 
 /*  */
@@ -371,4 +371,33 @@ button.toast-close-button {
 .ng-value-container {
   /* max-height: 75px; */
   /* overflow-y: scroll; */
+}
+
+.k-actions.k-actions-end {
+  display: none;
+}
+
+.k-upload {
+  height: 150px;
+  border-radius: 10px;
+  border: dashed 2px rgb(165, 165, 255);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.k-dropzone.k-upload-dropzone {
+  width: 100%;
+  height: 100%;
+  gap: 5px;
+  /* padding: 30px 0px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.k-dropzone-hint {
+  max-height: fit-content;
 }

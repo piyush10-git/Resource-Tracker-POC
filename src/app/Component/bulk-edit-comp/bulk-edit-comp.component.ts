@@ -17,7 +17,8 @@ export class BulkEditCompComponent {
   @Input() isLoading: boolean = false;
   @Input() selectedResources: number[] = [];
 
-  @Output() bulkEditResponseEmmiter: EventEmitter<any> = new EventEmitter<any>();
+  @Output() bulkEditResponseEmmiter = new EventEmitter<any>();
+  @Output() bulkEditModalToggleEmmiter = new EventEmitter<void>();
 
   isPreviewVisible: boolean = false;
 
@@ -59,7 +60,7 @@ export class BulkEditCompComponent {
     remarks: true,
   };
 
-  applyBulkEdit() {
+  ApplyBulkEdit() {
     const formValues = this.bulkEditForm.value;
     const selectedResourceIds = this.selectedResources;
     console.log('Applying bulk edit with values:', formValues, 'for resources:', selectedResourceIds);
@@ -82,7 +83,7 @@ export class BulkEditCompComponent {
         LocationId: formValues.location,
         SkillIds: formValues.skills,
         ProjectIds: formValues.project,
-        ReportingTo: formValues.reportingTo !== '' ? formValues.reportingTo: null,
+        ReportingTo: formValues.reportingTo !== '' ? formValues.reportingTo : null,
         billable: formValues.billable == 'Yes',
         CteDoj: formValues.ctedoj !== '' ? formValues.ctedoj : null,
         Remarks: formValues.ctedoj !== '' ? formValues.remarks : null,
@@ -90,7 +91,7 @@ export class BulkEditCompComponent {
     };
 
     console.log(payload);
-    
+
 
     // Call the API to apply bulk edit
     this.httpApiClient.BulkEditResources(payload).subscribe((response: any) => {
@@ -109,11 +110,14 @@ export class BulkEditCompComponent {
           remarks: false,
         }; // Reset field enable states
         // Handle success, e.g., close the modal, refresh data, etc.
-        this.bulkEditResponseEmmiter.emit({success: true, message: response.message});
+        this.bulkEditResponseEmmiter.emit({ success: true, message: response.message });
       } else {
         console.error('Bulk edit failed', response);
-        this.bulkEditResponseEmmiter.emit({success: false, message: response.message});
+        this.bulkEditResponseEmmiter.emit({ success: false, message: response.message });
       }
     });
+  }
+  OnCancelClick() {
+    this.bulkEditModalToggleEmmiter.emit();
   }
 }

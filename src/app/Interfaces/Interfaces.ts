@@ -16,3 +16,21 @@ export interface Option {
     name: string;
     id: number;
 }
+
+export interface ApiResoponse {
+    success: boolean;
+    message: string;
+    data: any;
+}
+
+export interface FileProcessingState {
+  file: File;
+  name: string;
+  size: string;
+  progress: number;
+  parsedRows: any[];
+  headers: string[];
+  validationErrors: string[];
+  isReady: boolean;
+}
+

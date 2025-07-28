@@ -64,12 +64,6 @@
     </div> -->
 
 <div class="Kendo-grid-container">
-  <kendo-upload [multiple]="false" [showFileList]="false" [autoUpload]="false" (select)="ExcelImport($event)"
-    [ngStyle]="{ 'height.px': 36, 'padding': '0', 'margin-top.px': 4, 'margin-bottom.px': 4 }" [class.k-button]="true"
-    [class.k-button-md]="true" [class.k-button-solid]="true" [class.k-button-solid-base]="true"
-    [class.k-upload-button]="true">
-    <!-- <span class="k-button-text">Import Excel</span> -->
-  </kendo-upload>
   <kendo-grid [kendoGridBinding]="gridData" [loading]="loading" [selectable]="{
     mode: 'multiple',
     metaKeyMultiSelect: this.requireSelectOrCtrlKeys
@@ -84,18 +78,11 @@
       <kendo-toolbar-separator></kendo-toolbar-separator>
       <kendo-toolbar-button kendoGridColumnChooserTool></kendo-toolbar-button>
 
-      <kendo-toolbar-button id="Delete-btn" [text]="GetDeleteTitle()" [disabled]="selectedKeys.length < 1" (click)="OnDeleteClick()"></kendo-toolbar-button>
-      <kendo-toolbar-button id="Edit-btn" [text]="'Bulk Edit'" [disabled]="selectedKeys.length < 2" (click)="OnBulkEditClick()"></kendo-toolbar-button>
+      <kendo-toolbar-button id="Delete-btn" [text]="GetDeleteTitle()" [disabled]="selectedKeys.length < 1"
+        (click)="OnDeleteClick()"></kendo-toolbar-button>
+      <kendo-toolbar-button id="Edit-btn" [text]="'Bulk Edit'" [disabled]="selectedKeys.length < 2"
+        (click)="OnBulkEditClick()"></kendo-toolbar-button>
       <kendo-toolbar-spacer></kendo-toolbar-spacer>
-
-      <ng-template kendoToolBarTemplate>
-        <kendo-upload [multiple]="false" [showFileList]="false" [autoUpload]="false" (select)="ExcelImport($event)"
-          [restrictions]="{ allowedExtensions: ['.xlsx', '.xls'] }"
-          class="k-button k-button-md k-button-solid k-button-solid-base" style="height: 36px;">
-          <span class="k-button-text">Import Excel</span>
-        </kendo-upload>
-      </ng-template>
-
 
       <!-- <kendo-upload [multiple]="false" [showFileList]="false" [autoUpload]="false" (select)="ExcelImport($event)">
       </kendo-upload> -->
@@ -111,6 +98,7 @@
 
       <kendo-toolbar-button id="Delete-btn" [text]="'Add Resource'"
         (click)="OnAddResourceClick()"></kendo-toolbar-button>
+      <kendo-toolbar-button id="import-btn" [text]="'Import'" (click)="OnImportDataClick()"></kendo-toolbar-button>
       <kendo-toolbar-button id="Pdf-btn" [text]="'PDF'" (click)="DownloadMultiSelectedPDF()"></kendo-toolbar-button>
       <!-- <kendo-toolbar-button kendoGridPDFTool></kendo-toolbar-button> -->
       <kendo-toolbar-button kendoGridExcelTool></kendo-toolbar-button>
@@ -143,9 +131,9 @@
         <span (click)="ShowDetail($event, dataItem)" title="View more" class="material-symbols-outlined edit-btn">
           call_made
         </span>
-        <span (click)="DownloadPDF($event, dataItem)" title="View more" class="material-symbols-outlined edit-btn">
+        <!-- <span (click)="DownloadPDF($event, dataItem)" title="View more" class="material-symbols-outlined edit-btn">
           picture_as_pdf
-        </span>
+        </span> -->
       </ng-template>
     </kendo-grid-column>
 
@@ -154,7 +142,6 @@
     </kendo-grid-pdf>
     <kendo-grid-excel fileName="Resources.xlsx" [fetchData]="allData.bind(this)"></kendo-grid-excel>
   </kendo-grid>
-  <app-bulk-edit-comp (bulkEditResponseEmmiter)="HandleBulkEditResponse($event)" [isVisible]="isBulkEditVisible" [selectedResources]="selectedKeys"></app-bulk-edit-comp>
 </div>
 
 <app-modal-pop-up [isVisible]="modalState.deleteModalVisible" [context]="deleteModalContext"
@@ -163,6 +150,12 @@
 <app-details-modal [isVisible]="modalState.detailsModalVisible" [resource]="detailsResource"
   (modal-event)="HandleDetailsModalEvent($event)"></app-details-modal>
 
+<app-excel-import [isVisible]="modalState.importDataModal"
+  (excelImportResponseEmitter)="HandleDataImportEmitter()"></app-excel-import>
+
+<app-bulk-edit-comp (bulkEditModalToggleEmmiter)="isBulkEditVisible=false"
+  (bulkEditResponseEmmiter)="HandleBulkEditResponse($event)" [isVisible]="isBulkEditVisible"
+  [selectedResources]="selectedKeys"></app-bulk-edit-comp>
 
 
 <!-- <kendo-grid

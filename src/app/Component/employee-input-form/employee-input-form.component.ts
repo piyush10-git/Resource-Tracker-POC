@@ -6,7 +6,7 @@ import { HttpAPIClientService } from '../../Services/http-api-client.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConvertResourceToRequest, ConvertResponseToResource, ParseGetResourceByIdResponse } from '../../UtilityFunctions/MapingFunctions';
 import { ModalPopUpComponent } from '../modal-pop-up/modal-pop-up.component';
-import { emailExistsValidator } from '../Custom Validators/validators';
+import { emailExistsValidator } from '../../Custom Validators/validators';
 import { AppStateServiceService } from '../../Services/app-state-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { NavigationService } from '../../Services/navigation.service';
@@ -128,10 +128,9 @@ export class EmployeeInputFormComponent {
       console.log(this.empId);
 
       this.isEditMode = true;
-      this.httpApiClient.GetResourceById(this.empId).subscribe((response: any) => {
-        console.log(response.data);
-        if (response?.success) {
-          let data = ParseGetResourceByIdResponse(response.data);
+      this.httpApiClient.GetResourceById(this.empId).subscribe((data: Resource | null) => {
+        console.log(data);
+        if (data) {
           this.employeeForm.patchValue(data);
           this.intialEditState = { ...data };
           this.employeeForm.controls['emailId'].addAsyncValidators(
@@ -389,14 +388,4 @@ export class EmployeeInputFormComponent {
       this.skillsDropdownOpen = false;
     }
   }
-
-  cities = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
-  ];
-
-  selectedCities: any[] = [];
 }

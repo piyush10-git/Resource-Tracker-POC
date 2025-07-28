@@ -1,0 +1,82 @@
+.auth-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+    width: 100dvw;
+}
+
+.auth-container {
+    width: 400px;
+    max-width: 400px;
+    padding: 30px 25px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+button {
+    padding: 12px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:disabled {
+    background-color: #a0c6ff;
+    cursor: not-allowed;
+}
+
+.error small {
+    color: #e74c3c;
+    font-size: 13px;
+}
+
+.toggle {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.toggle a {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+}

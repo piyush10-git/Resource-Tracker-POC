@@ -1,0 +1,51 @@
+<div class="modal-overlay" *ngIf="isVisible">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Import File</h3>
+            <button class="close-btn" (click)="OnButtonClick(false)">×</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="upload-label">Select Excel/CSV File(s):</div>
+            <kendo-upload [multiple]="true" [autoUpload]="false" [showFileList]="false" [saveUrl]="'none'"
+                [removeUrl]="'none'" accept=".csv,.xlsx" (select)="onFilesSelected($event)"></kendo-upload>
+
+            <div class="file-list" *ngIf="fileList.length">
+                <h4>Uploads</h4>
+                <div class="file-item" *ngFor="let f of fileList">
+                    <div class="inner-container">
+                        <span class="material-symbols-outlined file-icon">
+                            file_copy
+                        </span>
+                        <div class="upload-info-container">
+                            <div>{{ f.name }}</div> {{ f.size }}
+                            <div *ngIf="!f.isReady" class="status">Parsing...</div>
+                            <!-- <div *ngIf="f.isReady" class="status success">Ready</div> -->
+                            <progress *ngIf="!f.isReady" max="100" [value]="f.progress"></progress>
+                        </div>
+                        <button class="remove-btn" (click)="OnRemoveClick(f.name)" >
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </button>
+                    </div>
+                    <div *ngIf="f.validationErrors.length" class="validation-error">
+                        ⚠️ {{ f.validationErrors.length }} issue(s) detected.
+                        <button class="link-btn" (click)="toggleErrorDetails()">
+                            {{ showErrorDetails ? 'Hide' : 'Show' }} Details
+                        </button>
+                        <ul *ngIf="showErrorDetails">
+                            <li *ngFor="let err of f.validationErrors">{{ err }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <button class="secondary-btn" (click)="OnButtonClick(false)">Close</button>
+            <button class="primary-btn" [disabled]="fileList.length === 0" (click)="onManualUpload()">Import</button>
+        </div>
+    </div>
+</div>

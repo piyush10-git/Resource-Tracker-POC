@@ -18,14 +18,11 @@ import { DownloadPdf } from '../../UtilityFunctions/ObjectToPDF';
 import { ToastrService } from 'ngx-toastr';
 import { AppStateServiceService } from '../../Services/app-state-service.service';
 import { NavigationService } from '../../Services/navigation.service';
-import { SelectEvent } from '@progress/kendo-angular-upload';
-import * as XLSX from 'xlsx';
 import { UploadModule } from '@progress/kendo-angular-upload';
 import { CommonModule } from '@angular/common';
-import { ConvertNameToIds } from '../../UtilityFunctions/ConvertStringsToIds';
 import { LookupServiceService } from '../../Services/lookup-service.service';
 import { BulkEditCompComponent } from '../bulk-edit-comp/bulk-edit-comp.component';
-import { ExcelDateToJSDate } from '../../UtilityFunctions/ExcelImport';
+import { ExcelImportComponent } from '../excel-import/excel-import.component';
 
 @Component({
   selector: 'app-new-grid',
@@ -39,7 +36,7 @@ import { ExcelDateToJSDate } from '../../UtilityFunctions/ExcelImport';
     KENDO_INPUTS,
     ModalPopUpComponent,
     DetailsModalComponent,
-    UploadModule, CommonModule, BulkEditCompComponent],
+    UploadModule, CommonModule, BulkEditCompComponent, ExcelImportComponent],
   templateUrl: './new-grid.component.html',
   styleUrl: './new-grid.component.css'
 })
@@ -53,6 +50,7 @@ export class NewGridComponent {
   modalState: any = {
     deleteModalVisible: false,
     detailsModalVisible: false,
+    importDataModal: false,
   };
 
   isBulkEditVisible: boolean = false;
@@ -65,8 +63,9 @@ export class NewGridComponent {
   deleteModalContent!: string;
 
   OnBulkEditClick() {
-    if (this.selectedKeys.length < 2) { 
+    if (this.selectedKeys.length < 2) {
       this.toastr.warning('Please Select Resources', 'Bulk Edit');
+      this.isBulkEditVisible = false;
       return;
     }
     this.isBulkEditVisible = !this.isBulkEditVisible;
@@ -81,42 +80,36 @@ export class NewGridComponent {
       this.appStateService.SetData('selectedKeys', []);
     } else {
       this.toastr.error(event.message, 'Bulk Edit');
-      this.isBulkEditVisible = false;
     }
   }
 
   GetAllResourcesData() {
     this.loading = true;
-    this.httpAPIClientService.GetResources().subscribe((response: any) => {
-      console.log(response);
-      if (response?.success) {
-        this.gridData = ParseGetAllResourcesResponse(response?.data);
-        console.log(this.gridData);
+    this.httpAPIClientService.GetResources().subscribe({
+      next: (gridData: any) => {
+        console.log(gridData);
+        this.gridData = gridData;
         this.loading = false;
-        // this.gridData = (ConvertResponseToResourceresponse.data as Array<Resource>);
-      }
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => { this.loading = false; }
     });
   }
-  dropdownOptionsMapObject: any = {};
+  // dropdownOptionsMapObject: any = {};
 
   ngOnInit() {
     this.selectedKeys = this.appStateService.GetData('selectedKeys') || [];
-    this.lookupService.dropdownOptions$.subscribe((data: { dropdownOptionsArray: any, optionsMap: any }) => {
-      if (data) {
-        this.dropdownOptionsMapObject = data.optionsMap;
-      }
-    });
     this.GetAllResourcesData();
   }
 
   EditResource(event: any, empId: number) {
     event.stopPropagation();
-    // this.router.navigate([`/Edit/${empId}`]);
     this.navogationService.NavigateToTab(`/Edit/${empId}`);
   }
 
   ShowDetail(event: any, resource: any) {
-    // console.log(resource);
     event.stopPropagation();
     this.detailsResource = resource;
     this.modalState.detailsModalVisible = true;
@@ -176,6 +169,13 @@ export class NewGridComponent {
     }
   }
 
+  OnImportDataClick() {
+    this.modalState.importDataModal = !this.modalState.importDataModal;
+  }
+  HandleDataImportEmitter() {
+    this.GetAllResourcesData();
+    this.modalState.importDataModal = false;
+  }
   allData(): ExcelExportData {
     const result: ExcelExportData = {
       data: process(this.gridData, {
@@ -217,117 +217,116 @@ export class NewGridComponent {
 
   headers = ['empId', 'resourceName', 'designation', 'projectAllocation', 'technologySkill', 'location', 'emailId'];
 
-  ExcelImport(event: SelectEvent): void {
-    const file = event.files[0].rawFile;
-    const reader = new FileReader();
+  // ExcelImport(event: SelectEvent): void {
+  //   const file = event.files[0].rawFile;
+  //   const reader = new FileReader();
 
-    if (!file) {
-      this.toastr.error('No file selected', 'Import Error');
-      return;
-    }
+  //   if (!file) {
+  //     this.toastr.error('No file selected', 'Import Error');
+  //     return;
+  //   }
 
-    const isCSV = file.name.toLowerCase().endsWith('.csv');
+  //   const isCSV = file.name.toLowerCase().endsWith('.csv');
 
-    reader.onload = (e: any) => {
-      const content = e.target.result;
-      const data: any[] = [];
+  //   reader.onload = (e: any) => {
+  //     const content = e.target.result;
+  //     const data: any[] = [];
 
-      const parseCSVLine = (line: string): string[] => {
-        const result: string[] = [];
-        let current = '';
-        let insideQuotes = false;
+  //     const parseCSVLine = (line: string): string[] => {
+  //       const result: string[] = [];
+  //       let current = '';
+  //       let insideQuotes = false;
 
-        for (let i = 0; i < line.length; i++) {
-          const char = line[i];
-          const nextChar = line[i + 1];
+  //       for (let i = 0; i < line.length; i++) {
+  //         const char = line[i];
+  //         const nextChar = line[i + 1];
 
-          if (char === '"' && insideQuotes && nextChar === '"') {
-            current += '"';
-            i++; // skip the next quote
-          } else if (char === '"') {
-            insideQuotes = !insideQuotes;
-          } else if (char === ',' && !insideQuotes) {
-            result.push(current.trim());
-            current = '';
-          } else {
-            current += char;
-          }
-        }
+  //         if (char === '"' && insideQuotes && nextChar === '"') {
+  //           current += '"';
+  //           i++; // skip the next quote
+  //         } else if (char === '"') {
+  //           insideQuotes = !insideQuotes;
+  //         } else if (char === ',' && !insideQuotes) {
+  //           result.push(current.trim());
+  //           current = '';
+  //         } else {
+  //           current += char;
+  //         }
+  //       }
 
-        result.push(current.trim());
-        return result;
-      };
+  //       result.push(current.trim());
+  //       return result;
+  //     };
 
-      const mapRowToObject = (row: string[]): any => {
-        if (row.length < 10) return null;
+  //     const mapRowToObject = (row: string[]): any => {
+  //       if (row.length < 10) return null;
 
-        return {
-          resourceName: row[0],
-          designation: this.dropdownOptionsMapObject['designations'][0].get(row[1]),
-          reportingTo: row[2],
-          billable: row[3].toLowerCase() === 'yes',
-          technologySkill: ConvertNameToIds(this.dropdownOptionsMapObject['skills'][0], row[4]),
-          projectAllocation: ConvertNameToIds(this.dropdownOptionsMapObject['projects'][0], row[5]),
-          location: this.dropdownOptionsMapObject['locations'][0].get(row[6]),
-          emailId: row[7],
-          cteDoj: row[8],
-          remarks: row[9]
-        };
-      };
+  //       return {
+  //         resourceName: row[0],
+  //         designation: this.dropdownOptionsMapObject['designations'][0].get(row[1]),
+  //         reportingTo: row[2],
+  //         billable: row[3].toLowerCase() === 'yes',
+  //         technologySkill: ConvertNameToIds(this.dropdownOptionsMapObject['skills'][0], row[4]),
+  //         projectAllocation: ConvertNameToIds(this.dropdownOptionsMapObject['projects'][0], row[5]),
+  //         location: this.dropdownOptionsMapObject['locations'][0].get(row[6]),
+  //         emailId: row[7],
+  //         cteDoj: row[8],
+  //         remarks: row[9]
+  //       };
+  //     };
 
-      if (isCSV) {
-        const lines = content.split(/\r?\n/).filter((l: any) => l.trim() !== '');
-        const headers = parseCSVLine(lines[0]);
+  //     if (isCSV) {
+  //       const lines = content.split(/\r?\n/).filter((l: any) => l.trim() !== '');
+  //       const headers = parseCSVLine(lines[0]);
 
-        for (let i = 1; i < lines.length; i++) {
-          const row = parseCSVLine(lines[i]);
-          if (row.length === headers.length) {
-            const mapped = mapRowToObject(row);
-            if (mapped) data.push(mapped);
-          }
-        }
+  //       for (let i = 1; i < lines.length; i++) {
+  //         const row = parseCSVLine(lines[i]);
+  //         if (row.length === headers.length) {
+  //           const mapped = mapRowToObject(row);
+  //           if (mapped) data.push(mapped);
+  //         }
+  //       }
+  //       // chill
 
-        finalizeImport(data);
-      } else {
-        const wb = XLSX.read(content, { type: 'binary' });
-        const ws = wb.Sheets[wb.SheetNames[0]];
-        const raw: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1 });
+  //       finalizeImport(data);
+  //     } else {
+  //       const wb = XLSX.read(content, { type: 'binary' });
+  //       const ws = wb.Sheets[wb.SheetNames[0]];
+  //       const raw: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
-        for (let i = 1; i < raw.length; i++) {
-          const row = raw[i];
-          const mapped: any = mapRowToObject(row);
-          // console.log('mapped',mapped);
-          mapped.cteDoj = ExcelDateToJSDate(mapped.cteDoj);
-          // console.log ('fixed',mapped);
-          
-          if (mapped) data.push(mapped);
-        }
+  //       for (let i = 1; i < raw.length; i++) {
+  //         const row = raw[i];
+  //         const mapped: any = mapRowToObject(row);
+  //         // console.log('mapped',mapped);
+  //         mapped.cteDoj = ExcelDateToJSDate(mapped.cteDoj);
+  //         // console.log ('fixed',mapped);
 
-        finalizeImport(data);
-      }
-    };
+  //         if (mapped) data.push(mapped);
+  //       }
 
-    const finalizeImport = (data: any[]) => {
-      console.log('Imported structured data:', data);
-      this.httpAPIClientService.ImportExcelData(data).subscribe((response: any) => {
-        if (response?.success) {
-          this.toastr.success('Data imported successfully', 'Import');
-          this.GetAllResourcesData();
-        } else {
-          this.toastr.error('Failed to import data', 'Import Error');
-        }
-      }, (error) => {
-        console.error('Import error:', error);
-        this.toastr.error('Failed to import data', 'Import Error');
-      })
-    };
+  //       finalizeImport(data);
+  //     }
+  //   };
 
-    if (isCSV) {
-      reader.readAsText(file);
-    } else {
-      reader.readAsBinaryString(file);
-    }
-  }
+  //   const finalizeImport = (data: any[]) => {
+  //     console.log('Imported structured data:', data);
+  //     this.httpAPIClientService.ImportExcelData(data).subscribe((response: any) => {
+  //       if (response?.success) {
+  //         this.toastr.success('Data imported successfully', 'Import');
+  //         this.GetAllResourcesData();
+  //       } else {
+  //         this.toastr.error('Failed to import data', 'Import Error');
+  //       }
+  //     }, (error) => {
+  //       console.error('Import error:', error);
+  //       this.toastr.error('Failed to import data', 'Import Error');
+  //     })
+  //   };
 
-
+  //   if (isCSV) {
+  //     reader.readAsText(file);
+  //   } else {
+  //     reader.readAsBinaryString(file);
+  //   }
+  // }
 }
