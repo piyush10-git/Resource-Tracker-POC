@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, SignupDto } from '../../../Services/auth.service';
 import { ApiResoponse } from '../../../Interfaces/Interfaces';
 import { ToastrService } from 'ngx-toastr';
+import { LookupServiceService } from '../../../Services/lookup-service.service';
+import { HttpAPIClientService } from '../../../Services/http-api-client.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-signup-page',
@@ -22,8 +25,29 @@ export class SignupPageComponent {
     role: new FormControl<number | null>(null, [Validators.required]),
   });
 
-  constructor(private router: Router, private authService: AuthService, private toastr: ToastrService) { }
+  constructor(private router: Router, private authService: AuthService, private toastr: ToastrService, private http: HttpAPIClientService) { }
 
+  private roleOptionsSubject = new BehaviorSubject<any[]>([]);
+  roleOptions$ = this.roleOptionsSubject.asObservable();
+
+  GetRoleOptions() {
+    this.http.GetRoleOptions().subscribe({
+      next: (response: ApiResoponse) => {
+        if (response.success) {
+          this.roleOptionsSubject.next(response.data as any[]);          
+        } else {
+          console.log("Error", response);
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
+  ngOnInit() {
+    this.GetRoleOptions();
+  }
 
   onSubmit() {
     if (this.authForm.invalid) return;

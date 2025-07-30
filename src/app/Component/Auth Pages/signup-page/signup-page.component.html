@@ -37,14 +37,11 @@
             </div>
 
             <div class="form-group">
-                <select name="role" id="role" [value]="'null'" formControlName="role">
+                <select name="role" id="role" [value]="null" formControlName="role">
                     <option [value]="null" disabled hidden>Select Role</option>
-                    <option [value]="1">Admin</option>
-                    <option [value]="2">Manager</option>
-                    <option [value]="3">Employee</option>
+                    <option *ngFor="let role of (roleOptions$ | async)" [value]="role.id">{{ role.name }}</option>
                 </select>
-                <div class="error"
-                    *ngIf="role?.invalid && (role?.dirty || role?.touched)">
+                <div class="error" *ngIf="role?.invalid && (role?.dirty || role?.touched)">
                     <small *ngIf="role?.errors?.['required']">Role is required.</small>
                 </div>
             </div>

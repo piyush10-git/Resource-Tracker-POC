@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpAPIClientService } from './http-api-client.service';
 import { ArrayToMapConvertor } from '../UtilityFunctions/ConvertStringsToIds';
 import { BehaviorSubject } from 'rxjs';
+import { ApiResoponse } from '../Interfaces/Interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +26,8 @@ export class LookupServiceService {
           optionsMap[key] = ArrayToMapConvertor(response?.data[key]);
         }
         // Update the BehaviorSubject with the new dropdown options
-        this.dropdownOptionsSubject.next({dropdownOptionsArray, optionsMap});
+        this.dropdownOptionsSubject.next({ dropdownOptionsArray, optionsMap });
       }
     })
   }
-
 }
