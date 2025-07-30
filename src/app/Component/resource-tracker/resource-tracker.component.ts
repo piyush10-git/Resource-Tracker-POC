@@ -20,6 +20,7 @@ export class ResourceTrackerComponent {
     Edit: 'Edit',
     List: 'Resource-Grid',
     Add: 'Add',
+    Profile: 'Profile',
   };
 
   routeMap: any = {
@@ -33,6 +34,7 @@ export class ResourceTrackerComponent {
     Dashboard: 'Welcome to the Resource Tracker',
     Add: 'Add New Resource',
     Edit: 'Edit Resource Details',
+    Profile: 'Profile Page',
   }
 
   contentMap: any = {
@@ -40,6 +42,7 @@ export class ResourceTrackerComponent {
     Dashboard: 'Track, manage, and analyze internal resources at a glance',
     Add: 'Enter the resource’s details including designation, technology skills, and project allocation.',
     Edit: 'Update the resource’s information including role, project, skills, and other relevant details. Use this section to maintain accurate and up-to-date records.',
+    Profile: 'User details',
   }
 
   constructor(private router: Router, private navigationService: NavigationService, private lookupService: LookupServiceService, private authService: AuthService) { }

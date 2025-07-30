@@ -1,8 +1,16 @@
 <div class="unauthorized-container">
-  <div class="unauthorized-box">
-    <h1>401 - Unauthorized</h1>
-    <p>You don't have permission to access this page.</p>
-    <p>Redirecting to login in <strong>{{ countdown }}</strong> seconds...</p>
-    <button (click)="redirectToLogin()">Go to Login Now</button>
-  </div>
+    <div class="unauthorized-box">
+        <h1>401 - Unauthorized</h1>
+        <p>You don't have permission to access this page.</p>
+        <p>Redirecting to login in <strong>{{ countdown }}</strong> seconds...</p>
+        <div class="button-container">
+            <button class="back-button" *ngIf="backButtonVisible" (click)="OnBackButtonClick()">
+                <span class="material-symbols-outlined">
+                    keyboard_backspace
+                </span>
+                Go back
+            </button>
+            <button (click)="redirectToLogin()">Go to Login Now</button>
+        </div>
+    </div>
 </div>

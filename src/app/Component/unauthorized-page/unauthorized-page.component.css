@@ -28,7 +28,8 @@ p {
 }
 
 button {
-  margin-top: 20px;
+  height: 40px;
+  width: 165px;
   padding: 12px 20px;
   background-color: #007bff;
   color: white;
@@ -42,4 +43,18 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+.button-container { 
+  margin-top: 20px;
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  gap: 15px;
+}
+
+.back-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

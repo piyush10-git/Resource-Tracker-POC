@@ -8,13 +8,13 @@ import { LoginPageComponent } from './Component/Auth Pages/login-page/login-page
 import { SignupPageComponent } from './Component/Auth Pages/signup-page/signup-page.component';
 import { UnauthorizedPageComponent } from './Component/unauthorized-page/unauthorized-page.component';
 import { roleGuard } from './Guards/role.guard';
+import { ProfilePageComponent } from './Component/profile-page/profile-page.component';
 
 export const routes: Routes = [
     { path: 'Unauthorized', component: UnauthorizedPageComponent },
     { path: 'Login', component: LoginPageComponent },
     { path: 'Signup', component: SignupPageComponent },
     { path: '', redirectTo: '/Login', pathMatch: 'full' },
-
     {
         path: '', component: ResourceTrackerComponent,
         children: [
@@ -38,6 +38,10 @@ export const routes: Routes = [
                 canActivate: [authGaurd, roleGuard],
                 data: { roles: ['Admin', 'Manager'] }
             },
+             {
+                path: 'Profile', component: ProfilePageComponent,
+                canActivate: [authGaurd],
+             }
         ],
         canActivate: [authGaurd]
     },

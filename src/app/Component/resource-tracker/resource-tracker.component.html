@@ -41,7 +41,7 @@
                 {{ GetButtonIcon() }}
             </div>
 
-            <div class="material-symbols-outlined not-selected" (click)="OnLogOutClick()">
+            <div [class]="getStyles(['Profile'])" (click)="NavigateToTab('Profile')">
                 account_box
             </div>
         </div>

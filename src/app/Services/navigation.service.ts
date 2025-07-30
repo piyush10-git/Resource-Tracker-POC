@@ -13,14 +13,14 @@ export class NavigationService {
     Edit: 'Edit',
     List: 'Resource-Grid',
     Add: 'Add',
-    Login: 'Login'
+    Profile: 'Profile'
   };
 
   routeMap: any = {
     Dashboard: '/Dashboard',
     List: '/Resource-Grid',
     Add: '/Add',
-    Login: '/Login'
+    Profile: '/Profile'
   };
 
   titleMap: any = {
@@ -29,6 +29,7 @@ export class NavigationService {
     Add: 'Add New Resource',
     Edit: 'Edit Resource Details',
     BulkEdit: 'Bulk Edit Resources',
+    Profile: 'Profile Page',
   };
 
   constructor(private router: Router, private location: Location) { }
