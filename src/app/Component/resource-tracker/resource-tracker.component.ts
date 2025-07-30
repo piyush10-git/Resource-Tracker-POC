@@ -3,6 +3,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { NavigationService } from '../../Services/navigation.service';
 import { LookupServiceService } from '../../Services/lookup-service.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-resource-tracker',
@@ -12,9 +13,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './resource-tracker.component.css'
 })
 export class ResourceTrackerComponent {
-  // employeeDetails!: Resource;
-  // employeeDetailsArray: Array<Resource> = [];
-
   currentTab: string = 'Home';
 
   routerToTabMap: any = {
@@ -39,14 +37,12 @@ export class ResourceTrackerComponent {
 
   contentMap: any = {
     List: 'Browse and manage all employee resources in one place. Use the filters to search by technology, project, or location. Click on a row to view or edit details',
-    // Dashboard: 'This application provides a centralized view of all technical resources within the organization. It enables easy tracking of employee roles, project assignments, skills, and billability status to support effective planning and allocation',
     Dashboard: 'Track, manage, and analyze internal resources at a glance',
     Add: 'Enter the resource’s details including designation, technology skills, and project allocation.',
     Edit: 'Update the resource’s information including role, project, skills, and other relevant details. Use this section to maintain accurate and up-to-date records.',
   }
 
-  constructor(private router: Router, private navigationService: NavigationService, private lookupService: LookupServiceService) { }
-
+  constructor(private router: Router, private navigationService: NavigationService, private lookupService: LookupServiceService, private authService: AuthService) { }
 
   ngOnInit() {
     this.lookupService.GetDropdownOptions();
@@ -61,8 +57,6 @@ export class ResourceTrackerComponent {
   }
 
   GetBackButtonStatus(): boolean {
-    // console.log(this.navigationService.GetBackButtonVisible);
-
     return this.navigationService.GetBackButtonVisible;
   }
 
@@ -93,13 +87,18 @@ export class ResourceTrackerComponent {
     return this.titleMap[currentTab];
   }
 
-  GetConetntText(): string { 
+  GetConetntText(): string {
     const currentTab = this.currentTab;
     return this.contentMap[currentTab];
   }
 
   GetButtonIcon() {
     return this.router.url.toString().includes('Edit') ? 'edit' : 'add_box';
+  }
+
+  OnLogOutClick(): void {
+    this.authService.logout();
+    this.navigationService.NavigateToTab('Login');
   }
 
 

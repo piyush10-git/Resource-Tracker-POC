@@ -13,12 +13,14 @@ export class NavigationService {
     Edit: 'Edit',
     List: 'Resource-Grid',
     Add: 'Add',
+    Login: 'Login'
   };
 
   routeMap: any = {
     Dashboard: '/Dashboard',
     List: '/Resource-Grid',
     Add: '/Add',
+    Login: '/Login'
   };
 
   titleMap: any = {
