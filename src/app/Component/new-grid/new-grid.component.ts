@@ -155,13 +155,19 @@ export class NewGridComponent {
 
   HandleModalEvent(modalResponse: { caller: string, value: boolean }) {
     if (modalResponse.value) {
-      this.httpAPIClientService.DeleteMultipleResource(this.selectedKeys).subscribe((response: any) => {
-        console.log('Deleted successfuly');
-        this.GetAllResourcesData();
-        this.toastr.success('Deleted successfully', 'Delete');
-        this.selectedKeys = [];
-        this.appStateService.SetData('selectedKeys', this.selectedKeys);
-        this.modalState.deleteModalVisible = false;
+
+      this.httpAPIClientService.DeleteMultipleResource(this.selectedKeys).subscribe({
+        next: (response: any) => {
+          console.log('Deleted successfuly');
+          this.GetAllResourcesData();
+          this.toastr.success('Deleted successfully', 'Delete');
+          this.selectedKeys = [];
+          this.appStateService.SetData('selectedKeys', this.selectedKeys);
+          this.modalState.deleteModalVisible = false;
+        },
+        error: (err) => {
+          console.log(err);
+        }
       })
     }
     else {

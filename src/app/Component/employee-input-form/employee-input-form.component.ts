@@ -13,7 +13,6 @@ import { NavigationService } from '../../Services/navigation.service';
 import { LookupServiceService } from '../../Services/lookup-service.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 
-
 @Component({
   selector: 'app-employee-input-form',
   standalone: true,
@@ -99,20 +98,18 @@ export class EmployeeInputFormComponent {
       },
     };
 
-    // this.httpApiClient.GetDropdownOptions().subscribe((response: any) => {
-    //   console.log(response);
-    //   if (response?.success) {
-    //     this.dropdownOptions = response.data;
-    //   }
-    // })
-    // this.lookupService.GetDropdownOptions();
-    // this.dropdownOptions = this.lookupService.dropdownOptionsArray;
-    // console.log('something', this.dropdownOptions);
-
-    this.lookupService.dropdownOptions$.subscribe((data: { dropdownOptionsArray: any, optionsMap: any }) => {
-      if (data) {
-        this.dropdownOptionsArrayObject = data.dropdownOptionsArray;
-        this.dropdownOptionsMapObject = data.optionsMap;
+    this.lookupService.dropdownOptions$.subscribe({
+      next: (data: { dropdownOptionsArray: any, optionsMap: any }) => {
+        if (data) {
+          this.dropdownOptionsArrayObject = data.dropdownOptionsArray;
+          this.dropdownOptionsMapObject = data.optionsMap;
+        }
+      },
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {
+        console.log('calling hide');
       }
     });
 
@@ -128,23 +125,26 @@ export class EmployeeInputFormComponent {
       console.log(this.empId);
 
       this.isEditMode = true;
-      this.httpApiClient.GetResourceById(this.empId).subscribe((data: Resource | null) => {
-        console.log(data);
-        if (data) {
-          this.employeeForm.patchValue(data);
-          this.intialEditState = { ...data };
-          this.employeeForm.controls['emailId'].addAsyncValidators(
-            emailExistsValidator(
-              this.httpApiClient,
-              this.toastr,
-              () => this.isEditMode,
-              () => this.intialEditState.emailId,
-              (isLoading: boolean) => this.emailValidationLoading = isLoading
-            )
-
-          );
-
-          this.employeeForm.controls['emailId'].updateValueAndValidity({ onlySelf: true });
+      this.httpApiClient.GetResourceById(this.empId).subscribe({
+        next: (data: Resource | null) => {
+          console.log(data);
+          if (data) {
+            this.employeeForm.patchValue(data);
+            this.intialEditState = { ...data };
+            this.employeeForm.controls['emailId'].addAsyncValidators(
+              emailExistsValidator(
+                this.httpApiClient,
+                this.toastr,
+                () => this.isEditMode,
+                () => this.intialEditState.emailId,
+                (isLoading: boolean) => this.emailValidationLoading = isLoading
+              )
+            );
+            this.employeeForm.controls['emailId'].updateValueAndValidity({ onlySelf: true });
+          }
+        },
+        error: (err) => {
+          console.log(err);
         }
       })
     } else {
@@ -180,27 +180,37 @@ export class EmployeeInputFormComponent {
     if (!this.isEditMode) {
       // Add Mode
       console.log(requestBody);
-      this.httpApiClient.CreateResource(requestBody).subscribe((response: any) => {
-        console.log(response);
-        if (response?.success) {
-          this.toastr.success('Resource Added successfully', 'Add');
+      this.httpApiClient.CreateResource(requestBody).subscribe({
+        next: (response: any) => {
           console.log(response);
-          this.employeeForm.reset();
-          // this.router.navigate(['/Resource-Grid']);
-          this.navigationService.NavigateToTab('/Resource-Grid');
+          if (response?.success) {
+            this.toastr.success('Resource Added successfully', 'Add');
+            console.log(response);
+            this.employeeForm.reset();
+            // this.router.navigate(['/Resource-Grid']);
+            this.navigationService.NavigateToTab('/Resource-Grid');
+          }
+        },
+        error: (err) => {
+          console.log(err);
         }
       });
     } else {
       // Edit Mode
       requestBody['empId'] = this.empId;
       console.log(requestBody);
-      this.httpApiClient.UpdateResource(requestBody).subscribe((response: any) => {
-        console.log(response);
-        if (response?.success) {
-          this.toastr.success('Resource updated successfully', 'Update');
-          this.employeeForm.reset();
-          // this.router.navigate(['/Resource-Grid']);
-          this.navigationService.NavigateToTab('/Resource-Grid');
+      this.httpApiClient.UpdateResource(requestBody).subscribe({
+        next: (response: any) => {
+          console.log(response);
+          if (response?.success) {
+            this.toastr.success('Resource updated successfully', 'Update');
+            this.employeeForm.reset();
+            // this.router.navigate(['/Resource-Grid']);
+            this.navigationService.NavigateToTab('/Resource-Grid');
+          }
+        },
+        error: (err) => {
+          console.log(err);
         }
       });
     }
@@ -328,7 +338,7 @@ export class EmployeeInputFormComponent {
     if (this.selectedSkills.length === 0) {
       return 'Select Skills';
     }
-    
+
     return this.selectedSkills.map((skillId: number) => {
       return this.dropdownOptionsMapObject?.skills[1].get(skillId);
     }).filter((skillName: string | undefined) => skillName !== undefined).join(', ');
@@ -362,7 +372,7 @@ export class EmployeeInputFormComponent {
     if (this.selectedProjects.length === 0) {
       return 'Select Projects';
     }
-    
+
     return this.selectedProjects.map((projectId: number) => {
       return this.dropdownOptionsMapObject?.projects[1].get(projectId);
     }).filter((projectName: string | undefined) => projectName !== undefined).join(', ');

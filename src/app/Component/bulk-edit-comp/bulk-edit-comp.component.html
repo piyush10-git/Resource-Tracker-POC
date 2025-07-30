@@ -189,8 +189,7 @@
                   <!-- <input type="checkbox" (change)="fieldsEnabled.location!=fieldsEnabled.location" name="toggle-location" /> -->
                   Location
                 </label><br />
-                <select formControlName="location" class="custom-select" [disabled]="!fieldsEnabled.location"
-                  [value]="null">
+                <select formControlName="location" class="custom-select" [value]="null">
                   <option [value]="null" disabled hidden>Select Location</option>
                   <option *ngFor="let l of dropdownOptionsArrayObject?.locations" [value]="l?.id">
                     {{ l?.name }}

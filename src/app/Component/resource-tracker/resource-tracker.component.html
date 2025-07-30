@@ -28,7 +28,7 @@
 <div class="rt-container">
     <div class="sidebar">
         <div class="nav-buttons">
-            
+
             <div [class]="getStyles(['Dashboard'])" (click)="NavigateToTab('Dashboard')">
                 home
             </div>
@@ -40,6 +40,10 @@
             <div [class]="getStyles(['Add', 'Edit'])" (click)="NavigateToTab('Add')">
                 {{ GetButtonIcon() }}
             </div>
+
+            <div class="material-symbols-outlined not-selected">
+                account_box
+            </div>
         </div>
     </div>
     <div class="main-content">
@@ -49,7 +53,8 @@
             <div class="info-content"> {{ GetConetntText() }}</div>
         </div>
         <div class="content-wrapper">
-            <div [hidden]="!GetBackButtonStatus()" class="bread-crumb" (click)="OnBackButtonClick()" ><span class="material-symbols-outlined bread-crumb-icon">
+            <div [hidden]="!GetBackButtonStatus()" class="bread-crumb" (click)="OnBackButtonClick()"><span
+                    class="material-symbols-outlined bread-crumb-icon">
                     keyboard_backspace
                 </span>back</div>
             <router-outlet></router-outlet>

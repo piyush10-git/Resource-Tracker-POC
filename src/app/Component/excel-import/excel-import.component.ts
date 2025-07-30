@@ -29,12 +29,20 @@ export class ExcelImportComponent {
   constructor(
     private httpService: HttpAPIClientService,
     private toastr: ToastrService,
-    private lookupService: LookupServiceService
+    private lookupService: LookupServiceService,
   ) { }
 
   ngOnInit(): void {
-    this.lookupService.dropdownOptions$.subscribe((data) => {
-      this.dropdownOptionsMapObject = data?.optionsMap || {};
+    this.lookupService.dropdownOptions$.subscribe({
+      next: (data) => {
+        this.dropdownOptionsMapObject = data?.optionsMap || {};
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('calling hide');
+      }
     });
   }
 

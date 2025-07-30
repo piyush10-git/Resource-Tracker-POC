@@ -93,7 +93,7 @@ export class ResourceTrackerComponent {
     return this.titleMap[currentTab];
   }
 
-  GetConetntText(): string {
+  GetConetntText(): string { 
     const currentTab = this.currentTab;
     return this.contentMap[currentTab];
   }

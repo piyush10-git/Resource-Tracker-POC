@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './unauthorized-page.component.html',
   styleUrl: './unauthorized-page.component.css'
 })
-export class UnauthorizedPageComponent implements OnInit, OnDestroy{
+export class UnauthorizedPageComponent implements OnInit, OnDestroy {
   countdown = 10;
   private timer: any;
 

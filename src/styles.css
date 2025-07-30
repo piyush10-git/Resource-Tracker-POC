@@ -401,3 +401,8 @@ div.k-dropzone.k-upload-dropzone {
 .k-dropzone-hint {
   max-height: fit-content;
 }
+
+.k-toolbar-button {
+  padding: 5px 12px;
+  font-size: 0.85rem;
+}

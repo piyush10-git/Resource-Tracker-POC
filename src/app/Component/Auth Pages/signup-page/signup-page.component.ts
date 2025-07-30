@@ -59,8 +59,7 @@ export class SignupPageComponent {
       error: (err: any) => {
         console.error(err);
         this.toastr.error('Error occured while creating new user', 'Singup');
-      },
-      complete: () => { },
+      }
     });
 
   }

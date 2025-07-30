@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService, LoginDto } from '../../../Services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ApiResoponse } from '../../../Interfaces/Interfaces';
@@ -39,7 +39,7 @@ export class LoginPageComponent {
         console.log(response);
         if (response.success) {
           this.toastr.info('Successfuly signed in', 'Login');
-          this.router.navigate(['/Dashboard']);
+          this.router.navigate(['/Resource-Grid']);
         } else {
           this.toastr.error('Error occured while login', 'Login');
         }
@@ -47,8 +47,7 @@ export class LoginPageComponent {
       error: (err: any) => {
         console.error(err);
         this.toastr.error('Error occured while login', 'Login');
-      },
-      complete: () => { },
+      }
     });
   }
 

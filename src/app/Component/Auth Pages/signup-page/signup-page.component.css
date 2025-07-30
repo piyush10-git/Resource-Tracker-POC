@@ -4,6 +4,7 @@
     justify-content: center;
     height: 100dvh;
     width: 100dvw;
+    background-color: #FFFDF6;
 }
 
 .auth-container {
@@ -12,13 +13,17 @@
     padding: 30px 25px;
     background: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 10px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    /* box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); */
     font-family: 'Segoe UI', sans-serif;
 }
 
 h2 {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+    font-weight: 600;
+    font-size: 1.5rem;
     color: #333;
 }
 
@@ -64,6 +69,7 @@ button:disabled {
 }
 
 .error small {
+    padding-left: 5px;
     color: #e74c3c;
     font-size: 13px;
 }

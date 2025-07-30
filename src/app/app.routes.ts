@@ -10,37 +10,42 @@ import { UnauthorizedPageComponent } from './Component/unauthorized-page/unautho
 import { roleGuard } from './Guards/role.guard';
 
 export const routes: Routes = [
-    {path: 'Unauthorized', component:UnauthorizedPageComponent },
-    {path: 'Login', component: LoginPageComponent},
-    {path: 'Signup', component: SignupPageComponent},
+    { path: 'Unauthorized', component: UnauthorizedPageComponent },
+    { path: 'Login', component: LoginPageComponent },
+    { path: 'Signup', component: SignupPageComponent },
+    { path: '', redirectTo: '/Login', pathMatch: 'full' },
+
     {
         path: '', component: ResourceTrackerComponent,
         children: [
-            { path: 'Dashboard', component: LandingPageComponent,
+            {
+                path: 'Dashboard', component: LandingPageComponent,
                 canActivate: [authGaurd, roleGuard],
-                data: {roles: ['Admin']}
+                data: { roles: ['Admin'] }
             },
-            { path: 'Resource-Grid', component: NewGridComponent,
+            {
+                path: 'Resource-Grid', component: NewGridComponent,
                 canActivate: [authGaurd, roleGuard],
-                data: {roles: ['Admin', 'Manager', 'Employee']}
+                data: { roles: ['Admin', 'Manager', 'Employee'] }
             },
-            { path: 'Add', component: EmployeeInputFormComponent,
+            {
+                path: 'Add', component: EmployeeInputFormComponent,
                 canActivate: [authGaurd, roleGuard],
-                data: {roles: ['Admin', 'Manager']}
+                data: { roles: ['Admin', 'Manager'] }
             },
-            { path: 'Edit/:empId', component: EmployeeInputFormComponent,
+            {
+                path: 'Edit/:empId', component: EmployeeInputFormComponent,
                 canActivate: [authGaurd, roleGuard],
-                data: {roles: ['Admin', 'Manager']}
+                data: { roles: ['Admin', 'Manager'] }
             },
         ],
         canActivate: [authGaurd]
     },
-    { path: '', redirectTo: '/Login', pathMatch: 'full' },
     { path: '**', redirectTo: '/Login', pathMatch: 'full' },
 ];
 
 // export const routes: Routes = [
-//     {path:'Dashboard', component: LandingPageComponent},    
+//     {path:'Dashboard', component: LandingPageComponent},
 //     {path:'Resource-Grid', component: NewGridComponent},
 //     {path:'Add', component: EmployeeInputFormComponent},
 //     {path:'Edit/:empId', component: EmployeeInputFormComponent},
