@@ -151,7 +151,8 @@ export class ExcelImportComponent {
     }
 
     this.httpService.BulkImportImport(allData).subscribe({
-      next: (res: ApiResoponse) => {        
+      next: (res: ApiResoponse) => {
+        console.log(res);
         if (res?.success) {
           this.toastr.success('Data imported successfully', 'Import');
           this.OnButtonClick(false);
@@ -159,8 +160,9 @@ export class ExcelImportComponent {
           this.toastr.error('Backend rejected import', 'Import Failed');
         }
       },
-      error: () => {
-        this.toastr.error('Failed to import data', 'Import Error');
+      error: (err) => {
+        console.log(err);
+        this.toastr.error(err.error.message, 'Import Error');
       }
     });
   }
