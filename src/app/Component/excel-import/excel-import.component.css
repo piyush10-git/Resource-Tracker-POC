@@ -100,11 +100,14 @@
     height: 40px;
 }
 
-.primary-btn:hover {
-    background-color: rgb(0, 0, 219);
+.primary-btn:disabled {
+    background-color: rgb(113, 113, 255);
+    cursor: not-allowed;
 }
 
-
+.primary-btn:not(:disabled):hover {
+    background-color: rgb(0, 0, 219);
+}
 
 .upload-label {
     font-weight: 400;

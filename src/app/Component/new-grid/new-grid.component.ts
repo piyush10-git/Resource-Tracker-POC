@@ -87,7 +87,6 @@ export class NewGridComponent {
     this.loading = true;
     this.httpAPIClientService.GetResources().subscribe({
       next: (gridData: any) => {
-        console.log(gridData);
         this.gridData = gridData;
         this.loading = false;
       },
@@ -158,7 +157,6 @@ export class NewGridComponent {
 
       this.httpAPIClientService.DeleteMultipleResource(this.selectedKeys).subscribe({
         next: (response: any) => {
-          console.log('Deleted successfuly');
           this.GetAllResourcesData();
           this.toastr.success('Deleted successfully', 'Delete');
           this.selectedKeys = [];

@@ -82,10 +82,7 @@ export class AuthService {
   }
 
   hasRole(requiredRoles: string[]) : boolean {
-    console.log('requiredRoles', requiredRoles);
-    const userRoles = this.getUserRolls();
-    console.log('userRoles', userRoles);
-    
+    const userRoles = this.getUserRolls();    
     return requiredRoles.some(roles => userRoles.includes(roles));
   }
  
