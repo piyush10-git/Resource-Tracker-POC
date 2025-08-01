@@ -205,10 +205,7 @@ export class ExcelImportComponent {
   }
 
   OnRemoveClick(fileName: string) {
-    console.log('trying to remove', fileName);
-    this.fileList = this.fileList.filter(filesState => filesState.name != fileName);
-    console.log(this.fileList.length);
-    
+    this.fileList = this.fileList.filter(filesState => filesState.name != fileName);    
   }
 
   toggleErrorDetails() {
