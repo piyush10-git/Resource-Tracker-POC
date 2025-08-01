@@ -151,7 +151,7 @@ export class ExcelImportComponent {
     }
 
     this.httpService.BulkImportImport(allData).subscribe({
-      next: (res: ApiResoponse) => {
+      next: (res: ApiResoponse) => {        
         if (res?.success) {
           this.toastr.success('Data imported successfully', 'Import');
           this.OnButtonClick(false);
