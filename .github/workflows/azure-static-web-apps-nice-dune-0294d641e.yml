@@ -32,6 +32,12 @@ jobs:
                const coredemo = require('@actions/core')
                return await coredemo.getIDToken()
            result-encoding: string
+
+      - name: Inject Kendo UI License
+        run: |
+          mkdir -p ~/.telerik
+          echo "${{ secrets.KENDO_LICENSE }}" > ~/.telerik/kendo-ui-license.txt
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
