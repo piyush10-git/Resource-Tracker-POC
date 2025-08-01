@@ -235,8 +235,8 @@
                   <!-- <input type="checkbox" (change)="fieldsEnabled.billable!=fieldsEnabled.billable" name="toggle-billable" /> -->
                   Billable
                 </label><br />
-                <select formControlName="billable" class="custom-select">
-                  <option value="" disabled hidden>Select</option>
+                <select formControlName="billable" class="custom-select" [value]="null">
+                  <option [value]="null" disabled hidden selected>Select Billable Status</option>
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
                 </select>
