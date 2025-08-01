@@ -45,8 +45,8 @@ export class HttpAPIClientService {
     return this.httpClient.post(endpointURI, data);
   }
 
-  ImportExcelData(data: any): Observable<any> {
-    const endpointURI = this.serverURI + '/import-excel-data';
+  BulkImportImport(data: any): Observable<any> {
+    const endpointURI = this.serverURI + '/bulk-import-data';
     return this.httpClient.post(endpointURI, data);
   }
 

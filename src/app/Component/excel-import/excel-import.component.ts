@@ -9,7 +9,7 @@ import { LookupServiceService } from '../../Services/lookup-service.service';
 import { UploadModule } from '@progress/kendo-angular-upload';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FileProcessingState } from '../../Interfaces/Interfaces';
+import { ApiResoponse, FileProcessingState } from '../../Interfaces/Interfaces';
 
 @Component({
   selector: 'app-excel-import',
@@ -150,8 +150,8 @@ export class ExcelImportComponent {
       return;
     }
 
-    this.httpService.ImportExcelData(allData).subscribe({
-      next: (res) => {
+    this.httpService.BulkImportImport(allData).subscribe({
+      next: (res: ApiResoponse) => {
         if (res?.success) {
           this.toastr.success('Data imported successfully', 'Import');
           this.OnButtonClick(false);
