@@ -88,26 +88,16 @@ export class ExcelImportComponent {
       fileState.parsedRows = [];
 
       const totalRows = rows.length - 1;
-
+      
       rows.slice(1).forEach((row, index) => {
-        setTimeout(() => {
           if (row.every(cell => !cell || cell.trim?.() === '')) return;
           const mapped = this.mapRowToObject(row, isCSV);
           if (mapped) {
             fileState.parsedRows.push(mapped);
-            // if (fileState.previewRows.length < 5) {
-            //   fileState.previewRows.push(
-            //     fileState.headers.reduce((obj: any, key, i) => {
-            //       obj[key] = row[i];
-            //       return obj;
-            //     }, {})
-            //   );
-            // }
           } else {
             fileState.validationErrors.push(`Row ${index + 2}: Mapping failed.`);
           }
           fileState.progress = Math.round(((index + 1) / totalRows) * 100);
-        }, 1000);
       });
 
       fileState.isReady = true;

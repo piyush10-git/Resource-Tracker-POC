@@ -5,6 +5,6 @@ import { finalize } from 'rxjs';
 
 export const loaderInterceptor: HttpInterceptorFn = (req, next) => {
   const loader = inject(LoaderServiceService);
-  loader.show(); // comment
+  loader.show();
   return next(req).pipe(finalize(() => {loader.hide()}));
 };
