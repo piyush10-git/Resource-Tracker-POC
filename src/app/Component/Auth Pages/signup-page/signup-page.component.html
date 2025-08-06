@@ -7,7 +7,7 @@
                 <input type="username" placeholder="Enter Username" formControlName="username" />
                 <div class="error" *ngIf="username?.invalid && (username?.dirty || username?.touched)">
                     <small *ngIf="username?.errors?.['required']">Username is required.</small>
-                    <small *ngIf="username?.errors?.['noSpace']">Username cannot contain spaces.</small>
+                    <small *ngIf="username?.errors?.['whitespaces']">Username cannot contain spaces.</small>
                 </div>
             </div>
 
@@ -29,10 +29,10 @@
 
             <div class="form-group">
                 <input type="password" placeholder="Confirm Password" formControlName="confirmPassword" />
-                <div class="error"
-                    *ngIf="confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)">
-                    <small *ngIf="confirmPassword?.errors?.['required']">Please confirm your password.</small>
-                    <small *ngIf="confirmPassword?.errors?.['mismatch']">Passwords do not match.</small>
+                <div class="error" *ngIf="confirmPassword?.dirty || confirmPassword?.touched">
+                    <small *ngIf="confirmPassword?.invalid && confirmPassword?.errors?.['required']">Please confirm your
+                        password.</small>
+                    <small *ngIf="authForm.hasError('mismatch')">Passwords do not match.</small>
                 </div>
             </div>
 

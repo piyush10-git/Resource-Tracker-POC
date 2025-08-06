@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, SignupDto } from '../../../Services/auth.service';
 import { ApiResoponse } from '../../../Interfaces/Interfaces';
@@ -16,25 +16,36 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './signup-page.component.html',
   styleUrl: './signup-page.component.css'
 })
-export class SignupPageComponent {
+export class SignupPageComponent implements OnInit {
   authForm: FormGroup = new FormGroup({
-    username: new FormControl<string | null>('', [Validators.required]),
+    username: new FormControl<string | null>('', [Validators.required, this.whiteSpaceValidator]),
     email: new FormControl<string | null>('', [Validators.required, Validators.email]),
     password: new FormControl<string | null>('', [Validators.required, Validators.minLength(6)]),
     confirmPassword: new FormControl<string | null>(''),
     role: new FormControl<number | null>(null, [Validators.required]),
-  });
+  }, { validators: this.passwordMatchValidator });
+
+  passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password == confirmPassword ? null : { mismatch: true };
+  }
+
+  whiteSpaceValidator(control: AbstractControl): ValidationErrors | null {
+    const whiteSpaces = (control?.value || '').indexOf(' ') >= 0;
+    return whiteSpaces ? { whitespaces: true } : null;
+  }
 
   constructor(private router: Router, private authService: AuthService, private toastr: ToastrService, private http: HttpAPIClientService) { }
 
   private roleOptionsSubject = new BehaviorSubject<any[]>([]);
   roleOptions$ = this.roleOptionsSubject.asObservable();
 
-  GetRoleOptions() {
+  getRoleOptions() {
     this.http.GetRoleOptions().subscribe({
       next: (response: ApiResoponse) => {
         if (response.success) {
-          this.roleOptionsSubject.next(response.data as any[]);          
+          this.roleOptionsSubject.next(response.data as any[]);
         } else {
           console.log("Error", response);
         }
@@ -46,7 +57,7 @@ export class SignupPageComponent {
   }
 
   ngOnInit() {
-    this.GetRoleOptions();
+    this.getRoleOptions();
   }
 
   onSubmit() {
@@ -58,14 +69,12 @@ export class SignupPageComponent {
       this.authForm.get('confirmPassword')?.setErrors({ mismatch: true });
       return;
     }
-    if (username.includes(' ')) {
-      this.authForm.get('username')?.setErrors({ noSpace: true });
-    }
+
     console.log('Signing up with', email, password);
 
     const credentials: SignupDto = {
       username: username,
-      email: email,
+      email: email.toLowerCase(),
       password: password,
       roleId: role,
     };
@@ -74,15 +83,15 @@ export class SignupPageComponent {
       next: (response: ApiResoponse) => {
         console.log(response);
         if (response.success) {
-          this.toastr.info('Successfuly created new user', 'Singup');
+          this.toastr.info('Successfuly created new user', 'Signup');
           this.router.navigate(['/Login']);
         } else {
-          this.toastr.error('Error occured while creating new user', 'Singup');
+          this.toastr.error('Error occured while creating new user', 'Siggup');
         }
       },
       error: (err: any) => {
         console.error(err);
-        this.toastr.error('Error occured while creating new user', 'Singup');
+        this.toastr.error('Error occured while creating new user', 'Signup');
       }
     });
 
