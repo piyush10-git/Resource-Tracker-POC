@@ -9,7 +9,7 @@ import { ParseGetResourceByIdResponse } from '../UtilityFunctions/MapingFunction
   providedIn: 'root'
 })
 export class HttpAPIClientService {
-  private serverURI: string = Environment.URI + '/resources';
+  private serverURI: string = Environment.URI + '/api/resources';
 
   constructor(private httpClient: HttpClient) { }
 
