@@ -45,8 +45,11 @@ export class LoginPageComponent {
         }
       },
       error: (err: any) => {
-        console.error(err);
-        this.toastr.error('Error occured while login', 'Login');
+        if (err.status == 401) {
+          this.toastr.error('Invalid username or password', 'Login');
+        } else {
+          this.toastr.error('Error occured while login', 'Login');
+        }
       }
     });
   }

@@ -117,7 +117,7 @@ export class ExcelImportComponent {
       return {
         resourceName: row[0],
         designation: this.dropdownOptionsMapObject['designations']?.[0].get(row[1]),
-        reportingTo: row[2],
+        reportingToId: this.dropdownOptionsMapObject['managers']?.[0].get(row[2]),
         billable: row[3]?.toLowerCase() === 'yes',
         technologySkill: ConvertNameToIds(this.dropdownOptionsMapObject['skills']?.[0], row[4]),
         projectAllocation: ConvertNameToIds(this.dropdownOptionsMapObject['projects']?.[0], row[5]),
@@ -139,7 +139,7 @@ export class ExcelImportComponent {
       this.toastr.error('No valid data to import', 'Import Error');
       return;
     }
-
+    console.log(allData);
     this.httpService.BulkImportImport(allData).subscribe({
       next: (res: ApiResoponse) => {
         console.log(res);

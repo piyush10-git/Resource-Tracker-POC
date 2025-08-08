@@ -226,8 +226,12 @@
                   <!-- <input type="checkbox" (change)="fieldsEnabled.reportingTo!=fieldsEnabled.reportingTo" name="toggle-reportingTo" /> -->
                   Reporting To
                 </label><br />
-                <input type="text" formControlName="reportingTo" placeholder="Enter Reporting Manager"
-                  class="custom-input" />
+                <!-- <input type="text" formControlName="reportingTo" placeholder="Enter Reporting Manager"
+                  class="custom-input" /> -->
+                <select formControlName="reportingToId">
+                  <option [value]="null">Select Reporting To</option>
+                  <option *ngFor="let manager of dropdownOptionsArrayObject?.managers" [value]="manager.id">{{ manager.name }}</option>
+                </select>
               </td>
 
               <td>

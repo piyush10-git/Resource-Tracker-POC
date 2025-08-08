@@ -61,7 +61,7 @@ export class EmployeeInputFormComponent {
     location: new FormControl<number | null>(null, [Validators.required]),
 
     designation: new FormControl<number | null>(null, [Validators.required]),
-    reportingTo: new FormControl<string>('', [Validators.required]),
+    reportingToId: new FormControl<number | null>(null, [Validators.required]),
     billable: new FormControl<string | null>(null, [Validators.required]),
 
     technologySkill: new FormControl<number[]>([], [Validators.required]),

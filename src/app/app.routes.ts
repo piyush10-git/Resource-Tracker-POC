@@ -47,12 +47,3 @@ export const routes: Routes = [
     },
     { path: '**', redirectTo: '/Login', pathMatch: 'full' },
 ];
-
-// export const routes: Routes = [
-//     {path:'Dashboard', component: LandingPageComponent},
-//     {path:'Resource-Grid', component: NewGridComponent},
-//     {path:'Add', component: EmployeeInputFormComponent},
-//     {path:'Edit/:empId', component: EmployeeInputFormComponent},
-//     {path:'', redirectTo:'/Dashboard', pathMatch:'full'},
-//     {path:'**', redirectTo:'/Dashboard', pathMatch:'full'},
-// ];

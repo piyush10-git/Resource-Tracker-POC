@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpAPIClientService } from './http-api-client.service';
 import { ArrayToMapConvertor } from '../UtilityFunctions/ConvertStringsToIds';
 import { BehaviorSubject } from 'rxjs';
-import { ApiResoponse } from '../Interfaces/Interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +16,6 @@ export class LookupServiceService {
   GetDropdownOptions() {
     // Fetch dropdown options from the server
     this.httpApiClient.GetDropdownOptions().subscribe((response: any) => {
-      console.log('dropdown options', response);
       if (response?.success) {
         const dropdownOptionsArray = response?.data;
         // Convert the dropdown options to a map structure

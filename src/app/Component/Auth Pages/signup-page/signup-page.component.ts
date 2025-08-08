@@ -62,23 +62,13 @@ export class SignupPageComponent implements OnInit {
 
   onSubmit() {
     if (this.authForm.invalid) return;
-
     const { username, email, password, confirmPassword, role } = this.authForm.value;
-
-    if (password !== confirmPassword) {
-      this.authForm.get('confirmPassword')?.setErrors({ mismatch: true });
-      return;
-    }
-
-    console.log('Signing up with', email, password);
-
     const credentials: SignupDto = {
       username: username,
       email: email.toLowerCase(),
       password: password,
       roleId: role,
     };
-    console.log(credentials);
     this.authService.createUser(credentials).subscribe({
       next: (response: ApiResoponse) => {
         console.log(response);
@@ -86,7 +76,7 @@ export class SignupPageComponent implements OnInit {
           this.toastr.info('Successfuly created new user', 'Signup');
           this.router.navigate(['/Login']);
         } else {
-          this.toastr.error('Error occured while creating new user', 'Siggup');
+          this.toastr.error('Error occured while creating new user', 'Signup');
         }
       },
       error: (err: any) => {

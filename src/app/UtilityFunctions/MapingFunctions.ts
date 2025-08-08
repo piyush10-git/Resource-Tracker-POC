@@ -25,7 +25,7 @@ export function ConvertResourceToRequest(resource: any): any {
     return {
         resourceName: resource.resourceName,
         designation: resource.designation,
-        reportingTo: resource.reportingTo,
+        reportingToId: resource.reportingToId,
         billable: resource.billable === 'Yes',
         technologySkill: resource.technologySkill,
         projectAllocation: resource.projectAllocation,
@@ -42,7 +42,7 @@ export function ParseGetResourceByIdResponse(data: any): Resource {
         resourceName: data.name,
         designation: data.designation?.id,
         location: data.location?.id,
-        reportingTo: data.reportingTo,
+        reportingToId: data.reportingTo?.id,
         billable: data.billable ? 'Yes' : 'No',
         technologySkill: data.skills.map((skill: any) => skill.id),
         projectAllocation: data.projects.map((project: any) => project.id),

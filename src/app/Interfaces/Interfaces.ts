@@ -1,7 +1,7 @@
 export interface Resource {
     empId: number;
     resourceName: string;
-    reportingTo: string;
+    reportingToId: string;
     billable: 'Yes' | 'No';
     technologySkill: Option[];
     projectAllocation: Option[];
