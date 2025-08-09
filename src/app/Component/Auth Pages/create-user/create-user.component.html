@@ -1,0 +1,19 @@
+<div class="modal-overlay" *ngIf="isVisible">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Create New User</h2>
+            <button class="close-btn" (click)="OnButtonClick(false)">×</button>
+        </div>
+
+        <div class="modal-body">
+
+        </div>
+
+        <div class="modal-footer">
+            <button class="primary-btn" (click)="OnCreateUserClicked()"><span class="material-symbols-outlined">
+                    edit
+                </span>Edit</button>
+            <button class="primary-btn" (click)="OnButtonClick(false)">Close</button>
+        </div>
+    </div>
+</div>

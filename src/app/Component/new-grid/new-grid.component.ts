@@ -51,6 +51,7 @@ export class NewGridComponent {
     deleteModalVisible: false,
     detailsModalVisible: false,
     importDataModal: false,
+    createUserModal: false,
   };
 
   isBulkEditVisible: boolean = false;
