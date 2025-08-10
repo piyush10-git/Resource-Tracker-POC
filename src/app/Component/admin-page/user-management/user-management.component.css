@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.grid-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.active {
+    color: green;
+}
+
+.inactive {
+    color: red;
+}
+
+select {
+    width: 100%;
+    height: 30px;    
+    border-radius: 5px;
+    padding: 5px;
+    border: solid 1px #ccc;
+}

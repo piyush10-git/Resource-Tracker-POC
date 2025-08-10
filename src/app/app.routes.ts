@@ -9,6 +9,7 @@ import { SignupPageComponent } from './Component/Auth Pages/signup-page/signup-p
 import { UnauthorizedPageComponent } from './Component/unauthorized-page/unauthorized-page.component';
 import { roleGuard } from './Guards/role.guard';
 import { ProfilePageComponent } from './Component/profile-page/profile-page.component';
+import { AdminPageComponent } from './Component/admin-page/admin-page.component';
 
 export const routes: Routes = [
     { path: 'Unauthorized', component: UnauthorizedPageComponent },
@@ -38,10 +39,15 @@ export const routes: Routes = [
                 canActivate: [authGaurd, roleGuard],
                 data: { roles: ['Admin', 'Manager'] }
             },
-             {
+            {
+                path: 'Admin', component: AdminPageComponent,
+                canActivate: [authGaurd, roleGuard],
+                data: { roles: ['Admin'] }
+            },
+            {
                 path: 'Profile', component: ProfilePageComponent,
                 canActivate: [authGaurd],
-             }
+            }
         ],
         canActivate: [authGaurd]
     },

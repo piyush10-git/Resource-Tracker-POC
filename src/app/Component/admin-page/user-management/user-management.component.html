@@ -1,0 +1,40 @@
+<div class="grid-wrapper">
+    <kendo-grid [kendoGridBinding]="users" [pageSize]="10" [pageable]="true" [sortable]="true" [filterable]="true">
+        <!-- <kendo-grid-toolbar>
+        <button kendoButton (click)="openInviteUserModal()">Invite User</button>
+    </kendo-grid-toolbar> -->
+        <kendo-grid-column field="empId" title="EmpId" [width]="70">
+        </kendo-grid-column>
+        <kendo-grid-column field="name" title="Name" [width]="150">
+        </kendo-grid-column>
+        <kendo-grid-column field="email" title="Email" [width]="150">
+        </kendo-grid-column>
+        <kendo-grid-column field="status" title="Status" [width]="150">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <span [ngClass]="{
+                'active': dataItem.status,
+                'inactive': !dataItem.status
+            }">{{ dataItem.status ? 'Invited' : 'Not Invited'}}</span>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="username" title="Username" [width]="150">
+            <!-- <ng-template kendoGridCellTemplate let-dataItem>
+                {{ dataItem.username }}
+            </ng-template> --> 
+            </kendo-grid-column>
+        <kendo-grid-column field="role" title="Role" [width]="150">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <select name="role" id="role" [value]="null" formControlName="role">
+                    <option [value]="null" disabled hidden>Select Role</option>
+                    <option *ngFor="let role of (roleOptions$ | async)" [value]="role.id">{{ role.name }}</option>
+                </select>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column title="Actions" [width]="150">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <button kendoButton (click)="editUser(dataItem)">Edit</button>
+                <button kendoButton (click)="deleteUser(dataItem)">Delete</button>
+            </ng-template>
+        </kendo-grid-column>
+    </kendo-grid>
+</div>

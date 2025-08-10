@@ -20,6 +20,7 @@ export class ResourceTrackerComponent {
     Edit: 'Edit',
     List: 'Resource-Grid',
     Add: 'Add',
+    Admin: 'Admin',
     Profile: 'Profile',
   };
 
@@ -27,6 +28,7 @@ export class ResourceTrackerComponent {
     Dashboard: '/Dashboard',
     List: '/Resource-Grid',
     Add: '/Add',
+    Admin: '/Admin',
   }
 
   titleMap: any = {
@@ -35,6 +37,7 @@ export class ResourceTrackerComponent {
     Add: 'Add New Resource',
     Edit: 'Edit Resource Details',
     Profile: 'Profile Page',
+    Admin: 'Admin Dashboard',
   }
 
   contentMap: any = {
@@ -43,6 +46,7 @@ export class ResourceTrackerComponent {
     Add: 'Enter the resource’s details including designation, technology skills, and project allocation.',
     Edit: 'Update the resource’s information including role, project, skills, and other relevant details. Use this section to maintain accurate and up-to-date records.',
     Profile: 'User details',
+    Admin: 'Admin Dashboard',
   }
 
   constructor(private router: Router, private navigationService: NavigationService, private lookupService: LookupServiceService, private authService: AuthService) { }

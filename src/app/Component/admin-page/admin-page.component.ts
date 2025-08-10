@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { ModalPopUpComponent } from '../modal-pop-up/modal-pop-up.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserManagementComponent } from './user-management/user-management.component';
 
 @Component({
   selector: 'app-admin-page',
   standalone: true,
-  imports: [ReactiveFormsModule, ModalPopUpComponent, NgSelectModule, FormsModule],
+  imports: [ReactiveFormsModule, ModalPopUpComponent, NgSelectModule, FormsModule, UserManagementComponent],
   templateUrl: './admin-page.component.html',
   styleUrl: './admin-page.component.css'
 })

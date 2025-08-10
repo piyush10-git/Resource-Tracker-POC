@@ -33,6 +33,10 @@
                 home
             </div>
 
+            <div [class]="getStyles(['Admin'])" (click)="NavigateToTab('Admin')">
+                manage_accounts
+            </div>
+
             <div [class]="getStyles(['List'])" (click)="NavigateToTab('Resource-Grid')">
                 article
             </div>

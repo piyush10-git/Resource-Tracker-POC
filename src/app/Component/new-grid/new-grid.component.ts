@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { HttpAPIClientService } from '../../Services/http-api-client.service';
-import { ParseGetAllResourcesResponse } from '../../UtilityFunctions/MapingFunctions';
 import { ModalPopUpComponent } from '../modal-pop-up/modal-pop-up.component';
 import { FormsModule } from "@angular/forms";
 import { ExcelExportData } from "@progress/kendo-angular-excel-export";

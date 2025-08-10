@@ -168,6 +168,7 @@ button:hover {
 
 .info-content {
   color: #1a1a1a;
+  color: oklch(0.4 0.01 260);
 }
 
 .content-wrapper {
