@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { enableProdMode, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Environment } from '../../Environment/Environment';
 import { tap } from 'rxjs';
-import { ThemeService } from '@primeuix/themes';
 import { jwtDecode } from 'jwt-decode';
-import { HtmlParser, NodeWithI18n } from '@angular/compiler';
 import { ApiResoponse } from '../Interfaces/Interfaces';
 
 export interface LoginDto {

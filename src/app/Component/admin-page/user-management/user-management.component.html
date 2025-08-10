@@ -3,7 +3,7 @@
         <!-- <kendo-grid-toolbar>
         <button kendoButton (click)="openInviteUserModal()">Invite User</button>
     </kendo-grid-toolbar> -->
-        <kendo-grid-column field="empId" title="EmpId" [width]="70">
+        <kendo-grid-column field="empId" title="EMP ID" [width]="70">
         </kendo-grid-column>
         <kendo-grid-column field="name" title="Name" [width]="150">
         </kendo-grid-column>
@@ -14,17 +14,17 @@
                 <span [ngClass]="{
                 'active': dataItem.status,
                 'inactive': !dataItem.status
-            }">{{ dataItem.status ? 'Invited' : 'Not Invited'}}</span>
+            }">{{ dataItem.status ? 'Access Granted' : 'No Access'}}</span>
             </ng-template>
         </kendo-grid-column>
         <kendo-grid-column field="username" title="Username" [width]="150">
             <!-- <ng-template kendoGridCellTemplate let-dataItem>
                 {{ dataItem.username }}
-            </ng-template> --> 
-            </kendo-grid-column>
+            </ng-template> -->
+        </kendo-grid-column>
         <kendo-grid-column field="role" title="Role" [width]="150">
             <ng-template kendoGridCellTemplate let-dataItem>
-                <select name="role" id="role" [value]="null" formControlName="role">
+                <select name="role" id="role" [(ngModel)]="dataItem.roleId">
                     <option [value]="null" disabled hidden>Select Role</option>
                     <option *ngFor="let role of (roleOptions$ | async)" [value]="role.id">{{ role.name }}</option>
                 </select>
@@ -32,8 +32,13 @@
         </kendo-grid-column>
         <kendo-grid-column title="Actions" [width]="150">
             <ng-template kendoGridCellTemplate let-dataItem>
-                <button kendoButton (click)="editUser(dataItem)">Edit</button>
-                <button kendoButton (click)="deleteUser(dataItem)">Delete</button>
+                <button *ngIf="!dataItem.status" (click)="editUser(dataItem)">
+                    <!-- <span class="material-symbols-outlined">
+                        approval_delegation
+                    </span> -->
+                    Grant Access</button>
+                <button *ngIf="dataItem.status" (click)="deleteUser(dataItem)">Revoke Access</button>
+                <button *ngIf="dataItem.status" (click)="deleteUser(dataItem)">Resend Credentials</button>
             </ng-template>
         </kendo-grid-column>
     </kendo-grid>

@@ -7,29 +7,30 @@ import { CommonModule } from '@angular/common';
 import { ApiResoponse } from '../../../Interfaces/Interfaces';
 import { BehaviorSubject } from 'rxjs';
 import { HttpAPIClientService } from '../../../Services/http-api-client.service';
+import { FormsModule } from '@angular/forms';
 
 export interface User {
   empId: number;
   name: string;
   email: string;
   username: string;
-  role: string;
+  roleId: number;
   status: boolean;
 }
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
-  imports: [CommonModule, KENDO_GRID, KENDO_TOOLBAR, KENDO_LABELS, KENDO_INPUTS],
+  imports: [CommonModule, FormsModule, KENDO_GRID, KENDO_TOOLBAR, KENDO_LABELS, KENDO_INPUTS],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css'
 })
 export class UserManagementComponent {
   users: User[] = [
-    { empId: 3331, name: 'John Doe', email: 'John@Doe', username: 'johndoe', role: 'Admin', status: true },
-    { empId: 3332, name: 'Jane Smith', email: 'Jane@Smith', username: 'janesmith', role: 'User', status: false },
-    { empId: 3333, name: 'Alice Johnson', email: 'Alice@Johnson', username: 'alicej', role: 'User', status: true },
-    { empId: 3334, name: 'Bob Brown', email: 'Bob@Brown', username: 'bobbrown', role: 'Admin', status: false }
+    { empId: 3331, name: 'John Doe', email: 'John@Doe', username: 'johndoe', roleId: 1, status: true },
+    { empId: 3332, name: 'Jane Smith', email: 'Jane@Smith', username: 'janesmith', roleId: 2, status: false },
+    { empId: 3333, name: 'Alice Johnson', email: 'Alice@Johnson', username: 'alicej', roleId: 1, status: true },
+    { empId: 3334, name: 'Bob Brown', email: 'Bob@Brown', username: 'bobbrown', roleId: 3, status: false }
   ]
 
   constructor(private http: HttpAPIClientService) { }
