@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ApplicationModule, Injectable } from '@angular/core';
-import { Environment } from '../../Environment/Environment';
+import { Environment } from '../../environments/environment';
 import { map, Observable } from 'rxjs';
 import { ApiResoponse, Resource } from '../Interfaces/Interfaces';
 import { ParseGetResourceByIdResponse } from '../UtilityFunctions/MapingFunctions';

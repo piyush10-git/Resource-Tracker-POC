@@ -17,39 +17,37 @@ export const routes: Routes = [
     { path: 'Signup', component: SignupPageComponent },
     { path: '', redirectTo: '/Login', pathMatch: 'full' },
     {
-        path: '', component: ResourceTrackerComponent,
+        path: '', component: ResourceTrackerComponent, canDeactivate: [authGaurd],
         children: [
             {
                 path: 'Dashboard', component: LandingPageComponent,
-                canActivate: [authGaurd, roleGuard],
+                canActivate: [roleGuard],
                 data: { roles: ['Admin'] }
             },
             {
                 path: 'Resource-Grid', component: NewGridComponent,
-                canActivate: [authGaurd, roleGuard],
+                canActivate: [roleGuard],
                 data: { roles: ['Admin', 'Manager', 'Employee'] }
             },
             {
                 path: 'Add', component: EmployeeInputFormComponent,
-                canActivate: [authGaurd, roleGuard],
+                canActivate: [roleGuard],
                 data: { roles: ['Admin', 'Manager'] }
             },
             {
                 path: 'Edit/:empId', component: EmployeeInputFormComponent,
-                canActivate: [authGaurd, roleGuard],
+                canActivate: [roleGuard],
                 data: { roles: ['Admin', 'Manager'] }
             },
             {
                 path: 'Admin', component: AdminPageComponent,
-                canActivate: [authGaurd, roleGuard],
+                canActivate: [roleGuard],
                 data: { roles: ['Admin'] }
             },
             {
                 path: 'Profile', component: ProfilePageComponent,
-                canActivate: [authGaurd],
             }
-        ],
-        canActivate: [authGaurd]
+        ]
     },
     { path: '**', redirectTo: '/Login', pathMatch: 'full' },
 ];

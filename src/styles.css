@@ -368,11 +368,6 @@ button.toast-close-button {
   color: white;
 }
 
-.ng-value-container {
-  /* max-height: 75px; */
-  /* overflow-y: scroll; */
-}
-
 .k-actions.k-actions-end {
   display: none;
 }

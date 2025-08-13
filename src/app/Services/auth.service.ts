@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Environment } from '../../Environment/Environment';
+import { Environment } from '../../environments/environment';
 import { tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { ApiResoponse } from '../Interfaces/Interfaces';
