@@ -27,7 +27,7 @@ interface DecodedToken {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly tokenKey : string = 'auth_token';
+  private readonly tokenKey: string = 'auth_token';
   private readonly url: string = Environment.URI + '/api/auth';
   constructor(private http: HttpClient) { }
 
@@ -39,8 +39,9 @@ export class AuthService {
   login(credentials: LoginDto) {
     const endpoint = this.url + '/login';
     return this.http.post<ApiResoponse>(endpoint, credentials).pipe(
-      tap((response: ApiResoponse)=> {
-        if(response?.data?.token) {
+      tap((response: ApiResoponse) => {
+        // Store the token in local storage
+        if (response?.data?.token) {
           localStorage.setItem(this.tokenKey, response?.data?.token);
         }
       })
@@ -57,13 +58,13 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     const decoded = this.decodeToken();
-    if(!decoded) return false;
+    if (!decoded) return false;
     return decoded?.exp * 1000 > Date.now();
   }
 
   decodeToken(): DecodedToken | null {
     const token = this.getToken();
-    if(!token) return null;
+    if (!token) return null;
     try {
       return jwtDecode<DecodedToken>(token);
     }
@@ -73,15 +74,16 @@ export class AuthService {
   }
 
   getUserRolls(): string[] {
-    const decoded = this.decodeToken();
-    const roles = decoded?.role;
-    if(!roles) return [];
+    const decoded: any = this.decodeToken();
+    const roleKey = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+    const roles = decoded?.role || decoded?.[roleKey];
+    if (!roles) return [];
     return Array.isArray(roles) ? roles : [roles];
   }
 
-  hasRole(requiredRoles: string[]) : boolean {
-    const userRoles = this.getUserRolls();    
+  hasRole(requiredRoles: string[]): boolean {
+    const userRoles = this.getUserRolls();
     return requiredRoles.some(roles => userRoles.includes(roles));
   }
- 
+
 }

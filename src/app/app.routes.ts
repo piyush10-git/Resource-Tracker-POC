@@ -17,7 +17,7 @@ export const routes: Routes = [
     { path: 'Signup', component: SignupPageComponent },
     { path: '', redirectTo: '/Login', pathMatch: 'full' },
     {
-        path: '', component: ResourceTrackerComponent, canDeactivate: [authGaurd],
+        path: '', component: ResourceTrackerComponent, canActivate: [authGaurd],
         children: [
             {
                 path: 'Dashboard', component: LandingPageComponent,

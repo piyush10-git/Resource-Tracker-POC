@@ -229,7 +229,7 @@
                 <!-- <input type="text" formControlName="reportingTo" placeholder="Enter Reporting Manager"
                   class="custom-input" /> -->
                 <select formControlName="reportingToId">
-                  <option [value]="null">Select Reporting To</option>
+                  <option [value]="null" hidden selected>Select Reporting To</option>
                   <option *ngFor="let manager of dropdownOptionsArrayObject?.managers" [value]="manager.id">{{ manager.name }}</option>
                 </select>
               </td>
