@@ -90,4 +90,29 @@ export class HttpAPIClientService {
     return this.httpClient.get(endpoint);
   }
 
+  // getResources(query: any): Observable<any> {
+  //   const endpointURI = this.serverURI;
+  //   return this.httpClient.get<ApiResoponse>(endpointURI, { params: query });
+  // }
+
+  getResources(query: any): Observable<any> {
+    let params = new HttpParams()
+      .set('PageNumber', query.pageNumber)
+      .set('PageSize', query.pageSize);
+
+    (query.filters ?? []).forEach((filter: any, index: number) => {
+      params = params
+        .append(`Filters[${index}].Field`, filter.field)
+        .append(`Filters[${index}].Operator`, filter.operator)
+        .append(`Filters[${index}].Value`, filter.value);
+    });
+
+    (query.sorts ?? []).forEach((sort: any, index: number) => {
+      params = params
+        .append(`Sorts[${index}].Field`, sort.field)
+        .append(`Sorts[${index}].Direction`, sort.direction);
+    });
+
+    return this.httpClient.get(this.serverURI, { params });
+  }
 }

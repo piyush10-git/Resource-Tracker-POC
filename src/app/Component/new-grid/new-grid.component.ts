@@ -11,7 +11,6 @@ import {
 import { KENDO_TOOLBAR } from "@progress/kendo-angular-toolbar";
 import { KENDO_LABELS } from "@progress/kendo-angular-label";
 import { KENDO_INPUTS } from "@progress/kendo-angular-inputs";
-import { process } from "@progress/kendo-data-query";
 import { DetailsModalComponent } from '../details-modal/details-modal.component';
 import { DownloadPdf } from '../../UtilityFunctions/ObjectToPDF';
 import { ToastrService } from 'ngx-toastr';
@@ -22,6 +21,8 @@ import { CommonModule } from '@angular/common';
 import { LookupServiceService } from '../../Services/lookup-service.service';
 import { BulkEditCompComponent } from '../bulk-edit-comp/bulk-edit-comp.component';
 import { ExcelImportComponent } from '../excel-import/excel-import.component';
+import { State, process } from '@progress/kendo-data-query';
+import { GridDataResult } from '@progress/kendo-angular-grid';
 
 @Component({
   selector: 'app-new-grid',
@@ -40,6 +41,14 @@ import { ExcelImportComponent } from '../excel-import/excel-import.component';
   styleUrl: './new-grid.component.css'
 })
 export class NewGridComponent {
+  public gridView: GridDataResult = { data: [], total: 0 };
+  public gridState: State = {
+    skip: 0,
+    take: 7,
+    filter: undefined,
+    sort: []
+  };
+
   loading: boolean = false;
   requireSelectOrCtrlKeys: boolean = false;
   selectedKeys: any = [];
@@ -100,8 +109,60 @@ export class NewGridComponent {
 
   ngOnInit() {
     this.selectedKeys = this.appStateService.GetData('selectedKeys') || [];
-    this.GetAllResourcesData();
+    // this.GetAllResourcesData();
+    this.loadData();
+
   }
+
+  public onDataStateChange(state: State): void {
+    this.gridState = state;
+    this.loadData();
+  }
+
+  private loadData(): void {
+    this.loading = true;
+
+    // Map Kendo State to your DTO
+    const query = this.mapStateToQuery(this.gridState);
+    console.log(query);
+
+    this.httpAPIClientService.getResources(query).subscribe({
+      next: (result: any) => {
+        console.log(result);
+
+        this.gridView = {
+          data: result.data.data,
+          total: result.data.totalCount
+        };
+        this.loading = false;
+      },
+      error: (err: any) => {
+        console.error(err);
+        this.loading = false;
+      }
+    });
+  }
+
+  private mapStateToQuery(state: any): any {
+    return {
+      pageNumber: Math.floor(state.skip / state.take) + 1,
+      pageSize: state.take,
+      filters: state.filter && state.filter.filters
+        ? state.filter.filters
+          .filter((f: any) => f.value !== null && f.value !== undefined && f.value !== "")
+          .map((f: any) => ({
+            field: f.field,
+            operator: f.operator,
+            value: f.value
+          }))
+        : [],
+      sorts: state.sort.map((s: any) => ({
+        field: s.field,
+        direction: s.dir
+      }))
+    };
+  }
+
 
   EditResource(event: any, empId: number) {
     event.stopPropagation();
